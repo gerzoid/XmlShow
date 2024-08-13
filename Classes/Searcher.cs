@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace XMLViewer2
+namespace XMLViewer2.Classes
 {
     class Searcher
     {
@@ -15,7 +15,7 @@ namespace XMLViewer2
         private string _currentSearchTerm = null;
         private CancellationTokenSource _cancellationTokenSource;
         private ModelXML FindNextNode(TreeListView treeListView, string searchTerm)
-        {            
+        {
             ModelXML? model = null;
 
             bool startSearching = _lastFoundNode == null;
@@ -23,7 +23,7 @@ namespace XMLViewer2
             foreach (var root in treeListView.Roots)
             {
                 model = SearchNodeRecursively(treeListView, root, searchTerm, ref startSearching);
-                if (model!=null)
+                if (model != null)
                     break;
             }
 
@@ -41,22 +41,19 @@ namespace XMLViewer2
             var model = currentNode as ModelXML;
             ModelXML findedModel = null;
 
-            // Если это узел, с которого нужно продолжать поиск
             if (startSearching)
             {
                 bool finded = false;
-                if ((model.isAttribute) && (model.attribute.InnerText.Contains(searchTerm) || model.attribute.Name.Contains(searchTerm)))
+                if (model.isAttribute && (model.attribute.InnerText.Contains(searchTerm) || model.attribute.Name.Contains(searchTerm)))
                     finded = true;
-                if (!finded && (model?.node?.FirstChild?.NodeType != XmlNodeType.Element) && (model?.node?.InnerText.Contains(searchTerm) ?? false))
+                if (!finded && model?.node?.FirstChild?.NodeType != XmlNodeType.Element && (model?.node?.InnerText.Contains(searchTerm) ?? false))
                     finded = true;
                 if (!finded && (model?.node?.Name?.Contains(searchTerm) ?? false) ||
                     (model?.attribute?.Name?.Contains(searchTerm) ?? false))
                     finded = true;
-                // Проверяем поля модели на наличие искомого значения
                 if (finded)
-                {                    
+                {
                     _lastFoundNode = model; // Сохраняем текущий найденный узел
-                    //ExpandAndSelectFoundNode(treeListView, model); // Разворачиваем и выделяем найденный узел
                     return model;
                 }
             }
@@ -72,16 +69,14 @@ namespace XMLViewer2
                 foreach (var child in children)
                 {
                     findedModel = SearchNodeRecursively(treeListView, child, searchTerm, ref startSearching);
-                    if (findedModel!=null)
+                    if (findedModel != null)
                     {
                         return findedModel;
                     }
                 }
             }
-
             return null;
         }
-
 
         public async Task<ModelXML?> PerformSearchAsync(TreeListView treeListView, string searchTerm)
         {
@@ -94,7 +89,7 @@ namespace XMLViewer2
                 var res = await Task.Run(() => PerformSearch(treeListView, searchTerm), cancelationToken);
                 return res;
             }
-            catch(OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 MessageBox.Show("Поиск отменен");
             }
@@ -107,12 +102,12 @@ namespace XMLViewer2
         }
 
         public ModelXML PerformSearch(TreeListView treeListView, string searchTerm)
-        {          
-            _currentSearchTerm = searchTerm;                        
+        {
+            _currentSearchTerm = searchTerm;
             _lastFoundNode = null;  // Сбрасываем предыдущие результаты поиска
 
             var model = FindNextNode(treeListView, searchTerm);
-            if (model==null)
+            if (model == null)
             {
                 MessageBox.Show("Элемент не найден.");
             }
@@ -128,47 +123,11 @@ namespace XMLViewer2
             }
 
             ModelXML? model = FindNextNode(treeListView, _currentSearchTerm);
-            if ( model == null )
+            if (model == null)
             {
                 MessageBox.Show("Больше совпадений не найдено.");
             }
             return model;
         }
-        private void ExpandAndSelectFoundNode(TreeListView treeListView, ModelXML foundNode)
-        {
-            // Получаем всех родителей узла
-            var parents = GetParentNodes(treeListView, foundNode);
-
-            // Разворачиваем родительские узлы
-            foreach (var parent in parents)
-            {
-                treeListView.Expand(parent);
-                System.Windows.Forms.Application.DoEvents();  // Обновляем интерфейс
-            }
-
-            // Выделяем и фокусируем найденный узел
-            treeListView.SelectedObject = foundNode;
-            treeListView.EnsureModelVisible(foundNode);
-            treeListView.Focus();
-        }
-
-        private List<object> GetParentNodes(TreeListView treeListView, object node)
-        {
-            var parents = new List<object>();
-            var current = node;
-
-            while (current != null)
-            {
-                current = treeListView.GetParent(current);
-                if (current != null)
-                {
-                    parents.Add(current);
-                }
-            }
-
-            parents.Reverse();
-            return parents;
-        }
-
     }
 }

@@ -9,7 +9,7 @@ using System.Collections;
 using System.Data;
 using BrightIdeasSoftware;
 
-namespace XMLViewer2
+namespace XMLViewer2.Classes
 {
     public sealed class XmlViewer
     {
@@ -19,7 +19,8 @@ namespace XMLViewer2
         public ModelXML model;
 
         Searcher searcher;
-        public XmlViewer() {
+        public XmlViewer()
+        {
             model = new ModelXML();
             searcher = new Searcher();
         }
@@ -69,10 +70,10 @@ namespace XMLViewer2
         }
         public object? GetImages(object x)
         {
-            if (x is ModelXML model)            
+            if (x is ModelXML model)
                 if (model.isAttribute)
                     return 3;
-            
+
             return 2;
         }
 

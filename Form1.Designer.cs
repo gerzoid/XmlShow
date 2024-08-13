@@ -46,7 +46,6 @@
             splitContainer2 = new SplitContainer();
             statusStrip1 = new StatusStrip();
             toolStripSplitButton1 = new ToolStripSplitButton();
-            toolStripStatusLabel1 = new ToolStripStatusLabel();
             toolStrip1 = new ToolStrip();
             toolStripButton1 = new ToolStripButton();
             toolStripButton2 = new ToolStripButton();
@@ -253,7 +252,7 @@
             // statusStrip1
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripSplitButton1, toolStripStatusLabel1 });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripSplitButton1 });
             statusStrip1.Location = new Point(0, 728);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1390, 26);
@@ -268,12 +267,6 @@
             toolStripSplitButton1.Name = "toolStripSplitButton1";
             toolStripSplitButton1.Size = new Size(39, 24);
             toolStripSplitButton1.Text = "toolStripSplitButton1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(151, 20);
-            toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // toolStrip1
             // 
@@ -421,7 +414,6 @@
         private SplitContainer splitContainer2;
         private StatusStrip statusStrip1;
         private ToolStripSplitButton toolStripSplitButton1;
-        private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton1;
         private MenuStrip menuStrip1;

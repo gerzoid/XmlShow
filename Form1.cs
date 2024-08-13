@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using XMLViewer2.Classes;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace XMLViewer2

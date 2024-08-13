@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace XMLViewer2
+namespace XMLViewer2.Classes
 {
     public class ModelXML
     {

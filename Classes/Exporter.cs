@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace XMLViewer2
+namespace XMLViewer2.Classes
 {
     class Exporter
     {
