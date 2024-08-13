@@ -58,10 +58,10 @@ namespace XMLViewer2
             treeListView1.Columns.Add(column2);
             treeListView1.CanExpandGetter = _xmlViewer.CanExpandGetter;
             treeListView1.ChildrenGetter = _xmlViewer.ChildrenGetter;
-            
+
             ResizeForm();
 
-            treeListView1.Roots =  _xmlViewer.LoadXmlFile(fileName);
+            treeListView1.Roots = _xmlViewer.LoadXmlFile(fileName);
             treeListView1.BaseSmallImageList = imageList1;
         }
 
@@ -199,16 +199,6 @@ namespace XMLViewer2
 
         }
 
-        private void sssToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _xmlViewer.SearchNext(treeListView1);
-        }
-
-        private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private async void findTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -220,19 +210,12 @@ namespace XMLViewer2
 
         }
 
-        private void Form1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private async void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F3)
             {
-                _xmlViewer.SearchNext(treeListView1);
-            }
-        }
-
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F3)
-            {
-                _xmlViewer.SearchNext(treeListView1);
+                var model = await _xmlViewer.SearchNextAsync(treeListView1);
+                ExpandAndSelectFoundNode(model);
             }
         }
 
@@ -281,6 +264,9 @@ namespace XMLViewer2
             treeListView1.Focus();
         }
 
+        private void buttonFindNext_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

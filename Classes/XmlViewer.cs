@@ -83,9 +83,9 @@ namespace XMLViewer2.Classes
         {
             return await _searcher.PerformSearchAsync(treeListView, searchTerm);
         }
-        public void SearchNext(TreeListView treeListView)
+        public async Task<ModelXML?> SearchNextAsync(TreeListView treeListView)
         {
-            _searcher.SearchNext(treeListView);
+            return await _searcher.SearchNextAsync(treeListView);
         }
 
         public void Export()

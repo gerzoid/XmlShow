@@ -114,7 +114,7 @@ namespace XMLViewer2.Classes
             return model;
         }
 
-        public ModelXML? SearchNext(TreeListView treeListView)
+        public async Task<ModelXML?> SearchNextAsync(TreeListView treeListView)
         {
             if (_lastFoundNode == null)
             {
@@ -122,12 +122,27 @@ namespace XMLViewer2.Classes
                 return null;
             }
 
-            ModelXML? model = FindNextNode(treeListView, _currentSearchTerm);
-            if (model == null)
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource = new CancellationTokenSource();
+            var cancelationToken = _cancellationTokenSource.Token;
+
+            try
             {
-                MessageBox.Show("Больше совпадений не найдено.");
+                var res = await Task.Run(() => FindNextNode(treeListView, _currentSearchTerm), cancelationToken);
+                if (res==null)
+                    MessageBox.Show("Больше совпадений не найдено.");
+                return res;
             }
-            return model;
+            catch (OperationCanceledException)
+            {
+                MessageBox.Show("Поиск отменен");
+            }
+            finally
+            {
+                _cancellationTokenSource.Dispose();
+                _cancellationTokenSource = null;
+            }
+            return null;
         }
     }
 }

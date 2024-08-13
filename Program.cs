@@ -23,7 +23,6 @@ namespace XMLViewer2
                 var mainForm = serviceProvider.GetRequiredService<MainForm>();
                 Application.Run(mainForm);
             }
-            //Application.Run(new MainForm());
         }
 
         private static void ConfigureServices(IServiceCollection services)

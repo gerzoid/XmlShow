@@ -103,7 +103,6 @@
             treeListView1.View = View.Details;
             treeListView1.VirtualMode = true;
             treeListView1.ItemSelectionChanged += treeListView1_ItemSelectionChanged;
-            treeListView1.SelectedIndexChanged += treeListView1_SelectedIndexChanged;
             treeListView1.ContextMenuStripChanged += treeListView1_ContextMenuStripChanged;
             // 
             // contextMenuStrip1
@@ -130,8 +129,7 @@
             // 
             sssToolStripMenuItem.Name = "sssToolStripMenuItem";
             sssToolStripMenuItem.Size = new Size(237, 24);
-            sssToolStripMenuItem.Text = "sss";
-            sssToolStripMenuItem.Click += sssToolStripMenuItem_Click;
+            sssToolStripMenuItem.Text = "sss";            
             // 
             // imageList1
             // 
@@ -185,6 +183,7 @@
             buttonFindNext.Size = new Size(34, 27);
             buttonFindNext.TabIndex = 15;
             buttonFindNext.UseVisualStyleBackColor = true;
+            buttonFindNext.Click += buttonFindNext_Click;
             // 
             // findTextBox
             // 
@@ -379,7 +378,6 @@
             Text = "XmlShow";
             SizeChanged += Form1_SizeChanged;
             KeyDown += Form1_KeyDown;
-            PreviewKeyDown += Form1_PreviewKeyDown;
             ((System.ComponentModel.ISupportInitialize)treeListView1).EndInit();
             contextMenuStrip1.ResumeLayout(false);
             splitContainer1.Panel1.ResumeLayout(false);
