@@ -1,6 +1,6 @@
 ﻿namespace XMLViewer2
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             treeListView1 = new BrightIdeasSoftware.TreeListView();
             contextMenuStrip1 = new ContextMenuStrip(components);
             количествоЭлементовToolStripMenuItem = new ToolStripMenuItem();
@@ -364,7 +364,7 @@
             imageList2.ImageSize = new Size(16, 16);
             imageList2.TransparentColor = Color.Transparent;
             // 
-            // Form1
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -375,7 +375,7 @@
             Controls.Add(splitContainer2);
             KeyPreview = true;
             Margin = new Padding(3, 4, 3, 4);
-            Name = "Form1";
+            Name = "MainForm";
             Text = "XmlShow";
             SizeChanged += Form1_SizeChanged;
             KeyDown += Form1_KeyDown;

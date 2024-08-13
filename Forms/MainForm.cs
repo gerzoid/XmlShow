@@ -14,21 +14,25 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using XMLViewer2.Classes;
+using XMLViewer2.Forms;
+using XMLViewer2.Models;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace XMLViewer2
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         XmlViewer xmlViewer;
-
+        Settings settings;
         //string fileName = @"c:\1\test.xml";
         string fileName = @"c:\1\F013.xml";
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            settings = SettingsSerializer.Deserialize();
 
             xmlViewer = new XmlViewer();
             OLVColumn column = new OLVColumn();
@@ -85,7 +89,6 @@ namespace XMLViewer2
             var path = string.Join("/", ancestors.Concat(new[] { element.Name.LocalName }));
             return path;
         }
-
 
         private void ÍÓÎË˜ÂÒÚ‚Ó›ÎÂÏÂÌÚÓ‚ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -172,11 +175,8 @@ namespace XMLViewer2
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            var test = xmlViewer.model.GetChildrens();
-
-            var b = test.Cast<ModelXML>().ToList()[1];
-            //b.position = 4;
-            treeListView1.Expand(b);
+            ExportToExcelSettingsForm exportToExcelSettingsForm = new ExportToExcelSettingsForm();
+            exportToExcelSettingsForm.ShowDialog();
         }
 
         private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
