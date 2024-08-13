@@ -7,14 +7,20 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using XMLViewer2.Models;
 
 namespace XMLViewer2.Classes
 {
-    class Exporter
+    public class Exporter
     {
         Dictionary<string, int> columns = new Dictionary<string, int>();
         DataTable dataTable;
-
+        Settings _settings;
+        public Exporter(Settings settings)
+        {
+            _settings = settings;
+        }   
+        
         string GetNodename(XmlNode node)
         {
             return node.ParentNode?.Name + "/" + node.Name;

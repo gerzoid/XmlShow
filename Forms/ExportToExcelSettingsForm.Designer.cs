@@ -40,7 +40,6 @@
             cbFieldsName.AutoSize = true;
             cbFieldsName.Checked = true;
             cbFieldsName.CheckState = CheckState.Checked;
-            cbFieldsName.DataBindings.Add(new Binding("CheckState", settingsExportToExcelsBindingSource, "ColumnNameWithParentName", true));
             cbFieldsName.Location = new Point(29, 22);
             cbFieldsName.Name = "cbFieldsName";
             cbFieldsName.Size = new Size(405, 24);
@@ -67,6 +66,8 @@
             Controls.Add(cbFieldsName);
             Name = "ExportToExcelSettingsForm";
             Text = "Экспорт в Excel. Настройки";
+            FormClosing += ExportToExcelSettingsForm_FormClosing;
+            Load += ExportToExcelSettingsForm_Load;
             ((System.ComponentModel.ISupportInitialize)settingsExportToExcelsBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();

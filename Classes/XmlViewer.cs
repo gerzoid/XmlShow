@@ -18,11 +18,13 @@ namespace XMLViewer2.Classes
 
         public ModelXML model;
 
-        Searcher searcher;
-        public XmlViewer()
-        {
+        Searcher _searcher;
+        Exporter _exporter;
+        public XmlViewer(Exporter exporter, Searcher searcher)
+        {            
             model = new ModelXML();
-            searcher = new Searcher();
+            _searcher = searcher;
+            _exporter = exporter;
         }
 
         public IEnumerable LoadXmlFile(string filePath)
@@ -79,17 +81,17 @@ namespace XMLViewer2.Classes
 
         public async Task<ModelXML?> SearchAsync(TreeListView treeListView, string searchTerm)
         {
-            return await searcher.PerformSearchAsync(treeListView, searchTerm);
+            return await _searcher.PerformSearchAsync(treeListView, searchTerm);
         }
         public void SearchNext(TreeListView treeListView)
         {
-            searcher.SearchNext(treeListView);
+            _searcher.SearchNext(treeListView);
         }
 
         public void Export()
         {
-            Exporter exporter = new Exporter();
-            exporter.Export(model);
+            //Exporter exporter = new Exporter();
+            _exporter.Export(model);
         }
 
     }

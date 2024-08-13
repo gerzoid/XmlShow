@@ -17,12 +17,8 @@ namespace XMLViewer2.Models
         private bool _columnNameWithParentName = true;       
         public bool ColumnNameWithParentName
         {
-            get
-            {
-                return _columnNameWithParentName;
-            }
-            set
-            {
+            get { return _columnNameWithParentName; }
+            set {
                 _columnNameWithParentName = value;
                 //OnPropertyChanged("ColumnNameWithParentName");
                 OnPropertyChanged();

@@ -1,3 +1,8 @@
+using Microsoft.Extensions.DependencyInjection;
+using XMLViewer2.Classes;
+using XMLViewer2.Forms;
+using XMLViewer2.Models;
+
 namespace XMLViewer2
 {
     internal static class Program
@@ -8,10 +13,28 @@ namespace XMLViewer2
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+            
+            using (ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider())
+            {
+                var mainForm = serviceProvider.GetRequiredService<MainForm>();
+                Application.Run(mainForm);
+            }
+            //Application.Run(new MainForm());
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {         
+            var settings = SettingsSerializer.Deserialize();
+            services.AddSingleton(settings);
+            services.AddTransient<Exporter>();
+            services.AddTransient<Searcher>();
+            services.AddTransient<XmlViewer>();
+            services.AddTransient<MainForm>();
+            services.AddTransient<ExportToExcelSettingsForm>();         
         }
     }
 }

@@ -22,47 +22,53 @@ namespace XMLViewer2
 {
     public partial class MainForm : Form
     {
-        XmlViewer xmlViewer;
-        Settings settings;
+        XmlViewer _xmlViewer;
+        Settings _settings;
+        ExportToExcelSettingsForm _exportToExcelSettingsForm;
         //string fileName = @"c:\1\test.xml";
         string fileName = @"c:\1\F013.xml";
 
-        public MainForm()
+
+        public MainForm(Settings settings, XmlViewer viewer, ExportToExcelSettingsForm exportToExcelSettingsForm)
         {
+            _settings = settings;
+            _xmlViewer = viewer;
+            _exportToExcelSettingsForm = exportToExcelSettingsForm;
+
             InitializeComponent();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            settings = SettingsSerializer.Deserialize();
+            //settings = SettingsSerializer.Deserialize();
 
-            xmlViewer = new XmlViewer();
+            //xmlViewer = new XmlViewer();
             OLVColumn column = new OLVColumn();
             column.Text = "Тэг";
             column.Width = 300;
 
-            column.AspectGetter = xmlViewer.AspectGetterNames;
-            column.ImageGetter = xmlViewer.GetImages;
+            column.AspectGetter = _xmlViewer.AspectGetterNames;
+            column.ImageGetter = _xmlViewer.GetImages;
 
             treeListView1.Columns.Add(column);
 
             OLVColumn column2 = new OLVColumn();
             column2.Width = 200;
-            column2.AspectGetter = xmlViewer.AspectGetterValues;
+            column2.AspectGetter = _xmlViewer.AspectGetterValues;
             column2.Text = "Значение";
 
             treeListView1.Columns.Add(column2);
-            treeListView1.CanExpandGetter = xmlViewer.CanExpandGetter;
-            treeListView1.ChildrenGetter = xmlViewer.ChildrenGetter;
+            treeListView1.CanExpandGetter = _xmlViewer.CanExpandGetter;
+            treeListView1.ChildrenGetter = _xmlViewer.ChildrenGetter;
             
             ResizeForm();
 
-            treeListView1.Roots = xmlViewer.LoadXmlFile(fileName);
+            treeListView1.Roots =  _xmlViewer.LoadXmlFile(fileName);
             treeListView1.BaseSmallImageList = imageList1;
         }
 
 
         public void ExportToExcel()
         {
-            xmlViewer.Export();
+            _xmlViewer.Export();
         }
 
         public string GetParentPath(XmlNode node, ref string path)
@@ -78,7 +84,7 @@ namespace XMLViewer2
         {
             if (sender is TreeListView list)
             {
-                rtbValue.Text = (String)xmlViewer.AspectGetterValues(list.SelectedObject);
+                rtbValue.Text = (String)_xmlViewer.AspectGetterValues(list.SelectedObject);
             }
         }
 
@@ -169,14 +175,14 @@ namespace XMLViewer2
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
             //Exporter exporter = new Exporter();
-            xmlViewer.Export();
+            _xmlViewer.Export();
 
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            ExportToExcelSettingsForm exportToExcelSettingsForm = new ExportToExcelSettingsForm();
-            exportToExcelSettingsForm.ShowDialog();
+            //ExportToExcelSettingsForm exportToExcelSettingsForm = new ExportToExcelSettingsForm();
+            _exportToExcelSettingsForm.ShowDialog();
         }
 
         private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -188,14 +194,14 @@ namespace XMLViewer2
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 treeListView1.ClearObjects();
-                treeListView1.Roots = xmlViewer.LoadXmlFile(openFileDialog1.FileName);
+                treeListView1.Roots = _xmlViewer.LoadXmlFile(openFileDialog1.FileName);
             }
 
         }
 
         private void sssToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            xmlViewer.SearchNext(treeListView1);
+            _xmlViewer.SearchNext(treeListView1);
         }
 
         private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -207,7 +213,7 @@ namespace XMLViewer2
         {
             if (e.KeyCode == Keys.Enter)
             {
-                var model = await xmlViewer.SearchAsync(treeListView1, findTextBox.Text);
+                var model = await _xmlViewer.SearchAsync(treeListView1, findTextBox.Text);
                 memo.AppendText(model.node.InnerText);
                 ExpandAndSelectFoundNode(model);
             }
@@ -218,7 +224,7 @@ namespace XMLViewer2
         {
             if (e.KeyCode == Keys.F3)
             {
-                xmlViewer.SearchNext(treeListView1);
+                _xmlViewer.SearchNext(treeListView1);
             }
         }
 
@@ -226,7 +232,7 @@ namespace XMLViewer2
         {
             if (e.KeyCode == Keys.F3)
             {
-                xmlViewer.SearchNext(treeListView1);
+                _xmlViewer.SearchNext(treeListView1);
             }
         }
 

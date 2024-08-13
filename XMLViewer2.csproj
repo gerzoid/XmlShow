@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="7.2.1" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0-preview.6.24327.7" />
     <PackageReference Include="ObjectListView.Repack.NET6Plus" Version="2.9.5" />
   </ItemGroup>
 

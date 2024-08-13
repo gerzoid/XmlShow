@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace XMLViewer2.Classes
 {
-    class Searcher
+    public class Searcher
     {
         private ModelXML _lastFoundNode = null;
         private string _currentSearchTerm = null;
