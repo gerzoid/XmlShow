@@ -31,10 +31,6 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             treeListView1 = new BrightIdeasSoftware.TreeListView();
-            contextMenuStrip1 = new ContextMenuStrip(components);
-            количествоЭлементовToolStripMenuItem = new ToolStripMenuItem();
-            развернутьToolStripMenuItem = new ToolStripMenuItem();
-            sssToolStripMenuItem = new ToolStripMenuItem();
             imageList1 = new ImageList(components);
             memo = new RichTextBox();
             splitContainer1 = new SplitContainer();
@@ -45,7 +41,7 @@
             rtbValue = new RichTextBox();
             splitContainer2 = new SplitContainer();
             statusStrip1 = new StatusStrip();
-            toolStripSplitButton1 = new ToolStripSplitButton();
+            tsStatusLabel = new ToolStripStatusLabel();
             toolStrip1 = new ToolStrip();
             toolStripButton1 = new ToolStripButton();
             toolStripButton2 = new ToolStripButton();
@@ -60,7 +56,6 @@
             openFileDialog1 = new OpenFileDialog();
             imageList2 = new ImageList(components);
             ((System.ComponentModel.ISupportInitialize)treeListView1).BeginInit();
-            contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -81,7 +76,6 @@
             treeListView1.Activation = ItemActivation.OneClick;
             treeListView1.AlternateRowBackColor = Color.FromArgb(255, 128, 0);
             treeListView1.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
-            treeListView1.ContextMenuStrip = contextMenuStrip1;
             treeListView1.Dock = DockStyle.Top;
             treeListView1.EmptyListMsg = "";
             treeListView1.EmptyListMsgFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
@@ -104,32 +98,6 @@
             treeListView1.VirtualMode = true;
             treeListView1.ItemSelectionChanged += treeListView1_ItemSelectionChanged;
             treeListView1.ContextMenuStripChanged += treeListView1_ContextMenuStripChanged;
-            // 
-            // contextMenuStrip1
-            // 
-            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { количествоЭлементовToolStripMenuItem, развернутьToolStripMenuItem, sssToolStripMenuItem });
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(238, 76);
-            // 
-            // количествоЭлементовToolStripMenuItem
-            // 
-            количествоЭлементовToolStripMenuItem.Name = "количествоЭлементовToolStripMenuItem";
-            количествоЭлементовToolStripMenuItem.Size = new Size(237, 24);
-            количествоЭлементовToolStripMenuItem.Text = "Количество элементов";
-            количествоЭлементовToolStripMenuItem.Click += количествоЭлементовToolStripMenuItem_Click;
-            // 
-            // развернутьToolStripMenuItem
-            // 
-            развернутьToolStripMenuItem.Name = "развернутьToolStripMenuItem";
-            развернутьToolStripMenuItem.Size = new Size(237, 24);
-            развернутьToolStripMenuItem.Text = "Развернуть";
-            // 
-            // sssToolStripMenuItem
-            // 
-            sssToolStripMenuItem.Name = "sssToolStripMenuItem";
-            sssToolStripMenuItem.Size = new Size(237, 24);
-            sssToolStripMenuItem.Text = "sss";            
             // 
             // imageList1
             // 
@@ -251,21 +219,18 @@
             // statusStrip1
             // 
             statusStrip1.ImageScalingSize = new Size(20, 20);
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripSplitButton1 });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { tsStatusLabel });
             statusStrip1.Location = new Point(0, 728);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1390, 26);
             statusStrip1.TabIndex = 12;
             statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripSplitButton1
+            // tsStatusLabel
             // 
-            toolStripSplitButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripSplitButton1.Image = (Image)resources.GetObject("toolStripSplitButton1.Image");
-            toolStripSplitButton1.ImageTransparentColor = Color.Magenta;
-            toolStripSplitButton1.Name = "toolStripSplitButton1";
-            toolStripSplitButton1.Size = new Size(39, 24);
-            toolStripSplitButton1.Text = "toolStripSplitButton1";
+            tsStatusLabel.Name = "tsStatusLabel";
+            tsStatusLabel.Size = new Size(15, 20);
+            tsStatusLabel.Text = "-";
             // 
             // toolStrip1
             // 
@@ -318,31 +283,32 @@
             // 
             toolStripMenuItem2.Image = Properties.Resources.icons8_открыть_папку_48;
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(150, 26);
+            toolStripMenuItem2.Size = new Size(224, 26);
             toolStripMenuItem2.Text = "Открыть";
+            toolStripMenuItem2.Click += toolStripMenuItem2_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(147, 6);
+            toolStripSeparator1.Size = new Size(221, 6);
             // 
             // toolStripMenuItem3
             // 
             toolStripMenuItem3.Image = Properties.Resources.icons8_экспорт_excel_48;
             toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(150, 26);
+            toolStripMenuItem3.Size = new Size(224, 26);
             toolStripMenuItem3.Text = "Экспорт";
             toolStripMenuItem3.Click += toolStripMenuItem3_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(147, 6);
+            toolStripSeparator2.Size = new Size(221, 6);
             // 
             // выходToolStripMenuItem
             // 
             выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            выходToolStripMenuItem.Size = new Size(150, 26);
+            выходToolStripMenuItem.Size = new Size(224, 26);
             выходToolStripMenuItem.Text = "Выход";
             // 
             // toolStripMenuItem1
@@ -379,7 +345,6 @@
             SizeChanged += Form1_SizeChanged;
             KeyDown += Form1_KeyDown;
             ((System.ComponentModel.ISupportInitialize)treeListView1).EndInit();
-            contextMenuStrip1.ResumeLayout(false);
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
@@ -405,13 +370,10 @@
 
         private BrightIdeasSoftware.TreeListView treeListView1;
         private ImageList imageList1;
-        private ContextMenuStrip contextMenuStrip1;
-        private ToolStripMenuItem количествоЭлементовToolStripMenuItem;
         private RichTextBox memo;
         private SplitContainer splitContainer1;
         private SplitContainer splitContainer2;
         private StatusStrip statusStrip1;
-        private ToolStripSplitButton toolStripSplitButton1;
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButton1;
         private MenuStrip menuStrip1;
@@ -427,10 +389,9 @@
         private TextBox  findTextBox;
         private RichTextBox rtbValue;
         private ToolStripButton toolStripButton2;
-        private ToolStripMenuItem развернутьToolStripMenuItem;
         private OpenFileDialog openFileDialog1;
-        private ToolStripMenuItem sssToolStripMenuItem;
         private Button buttonFindNext;
         private ImageList imageList2;
+        private ToolStripStatusLabel tsStatusLabel;
     }
 }

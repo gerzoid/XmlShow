@@ -15,16 +15,23 @@ namespace XMLViewer2.Forms
     public partial class ExportToExcelSettingsForm : Form
     {
         Settings _settings;
+        XmlViewer _viewer;
+        
         bool isBinded = false;
-        public ExportToExcelSettingsForm(Settings settings)
+        public ExportToExcelSettingsForm(Settings settings, XmlViewer viewer)
         {
             _settings = settings;
+            _viewer = viewer;
             InitializeComponent();
+
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-
+            button1.Enabled = false;
+            await Task.Run(()=>_viewer.Export());
+            
+            Close();
         }
 
         private void ExportToExcelSettingsForm_Load(object sender, EventArgs e)

@@ -8,6 +8,7 @@ using System.Xml;
 using System.Collections;
 using System.Data;
 using BrightIdeasSoftware;
+using XMLViewer2.Models;
 
 namespace XMLViewer2.Classes
 {
@@ -20,17 +21,24 @@ namespace XMLViewer2.Classes
 
         Searcher _searcher;
         Exporter _exporter;
-        public XmlViewer(Exporter exporter, Searcher searcher)
+        Settings _settings;
+
+        public XmlViewer(Exporter exporter, Searcher searcher, Settings settings)
         {            
             model = new ModelXML();
             _searcher = searcher;
             _exporter = exporter;
+            _settings = settings;
         }
 
         public IEnumerable LoadXmlFile(string filePath)
         {
             model = new ModelXML();
-            xmlDoc = new XmlDocument();
+            xmlDoc = new XmlDocument();                       
+            
+            _settings.FileName = Path.GetFileName(filePath);
+            _settings.FilePath = Path.GetDirectoryName(filePath);
+
             xmlDoc.Load(filePath);
             model.node = xmlDoc;
             return model.GetChildrens();
@@ -88,10 +96,11 @@ namespace XMLViewer2.Classes
             return await _searcher.SearchNextAsync(treeListView);
         }
 
-        public void Export()
+        public bool Export()
         {
-            //Exporter exporter = new Exporter();
+            //Exporter exporter = new Exporter();            
             _exporter.Export(model);
+            return true;
         }
 
     }

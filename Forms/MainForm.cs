@@ -26,7 +26,7 @@ namespace XMLViewer2
         Settings _settings;
         ExportToExcelSettingsForm _exportToExcelSettingsForm;
         //string fileName = @"c:\1\test.xml";
-        string fileName = @"c:\1\F013.xml";
+//        string fileName = @"c:\1\F013.xml";
 
 
         public MainForm(Settings settings, XmlViewer viewer, ExportToExcelSettingsForm exportToExcelSettingsForm)
@@ -61,8 +61,10 @@ namespace XMLViewer2
 
             ResizeForm();
 
-            treeListView1.Roots = _xmlViewer.LoadXmlFile(fileName);
+            //treeListView1.Roots = _xmlViewer.LoadXmlFile(fileName);
             treeListView1.BaseSmallImageList = imageList1;
+
+            tsStatusLabel.DataBindings.Add(new Binding("Text", settings, "CurrentOperation", true, DataSourceUpdateMode.OnPropertyChanged));
         }
 
 
@@ -98,7 +100,7 @@ namespace XMLViewer2
 
         private void количествоЭлементовToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            XDocument xdoc = XDocument.Load(fileName);
+            /*XDocument xdoc = XDocument.Load(fileName);
 
             string path = "";
             memo.AppendText(GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path));
@@ -115,7 +117,7 @@ namespace XMLViewer2
 
 
 
-            MessageBox.Show(Convert.ToString(currentElements.Count()));
+            MessageBox.Show(Convert.ToString(currentElements.Count()));*/
 
             /* var nodes = FindNodesContainingText(xdoc, "Виталий");
             //((ModelXML)treeListView1.SelectedObject).node.Name;
@@ -174,14 +176,11 @@ namespace XMLViewer2
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            //Exporter exporter = new Exporter();
-            _xmlViewer.Export();
-
+            _exportToExcelSettingsForm.ShowDialog();
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            //ExportToExcelSettingsForm exportToExcelSettingsForm = new ExportToExcelSettingsForm();
             _exportToExcelSettingsForm.ShowDialog();
         }
 
@@ -207,7 +206,6 @@ namespace XMLViewer2
                 memo.AppendText(model.node.InnerText);
                 ExpandAndSelectFoundNode(model);
             }
-
         }
 
         private async void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -267,6 +265,11 @@ namespace XMLViewer2
         private void buttonFindNext_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            toolStripButton1_Click(this, null);
         }
     }
 }

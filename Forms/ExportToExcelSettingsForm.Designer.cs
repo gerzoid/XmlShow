@@ -65,6 +65,7 @@
             Controls.Add(button1);
             Controls.Add(cbFieldsName);
             Name = "ExportToExcelSettingsForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Экспорт в Excel. Настройки";
             FormClosing += ExportToExcelSettingsForm_FormClosing;
             Load += ExportToExcelSettingsForm_Load;
