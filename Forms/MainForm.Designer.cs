@@ -31,6 +31,10 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             treeListView1 = new BrightIdeasSoftware.TreeListView();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            количествоЭлементовToolStripMenuItem = new ToolStripMenuItem();
+            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem = new ToolStripMenuItem();
+            статистикаЗначенийПоТегуToolStripMenuItem = new ToolStripMenuItem();
             imageList1 = new ImageList(components);
             memo = new RichTextBox();
             splitContainer1 = new SplitContainer();
@@ -55,7 +59,10 @@
             toolStripMenuItem1 = new ToolStripMenuItem();
             openFileDialog1 = new OpenFileDialog();
             imageList2 = new ImageList(components);
+            contextMenuStrip2 = new ContextMenuStrip(components);
+            очиститьToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)treeListView1).BeginInit();
+            contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -69,6 +76,7 @@
             statusStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
+            contextMenuStrip2.SuspendLayout();
             SuspendLayout();
             // 
             // treeListView1
@@ -76,6 +84,7 @@
             treeListView1.Activation = ItemActivation.OneClick;
             treeListView1.AlternateRowBackColor = Color.FromArgb(255, 128, 0);
             treeListView1.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
+            treeListView1.ContextMenuStrip = contextMenuStrip1;
             treeListView1.Dock = DockStyle.Top;
             treeListView1.EmptyListMsg = "";
             treeListView1.EmptyListMsgFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
@@ -99,6 +108,35 @@
             treeListView1.ItemSelectionChanged += treeListView1_ItemSelectionChanged;
             treeListView1.ContextMenuStripChanged += treeListView1_ContextMenuStripChanged;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { количествоЭлементовToolStripMenuItem, количествоЭлементовСТакимЖеЗначениемToolStripMenuItem, статистикаЗначенийПоТегуToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(398, 76);
+            contextMenuStrip1.Opening += contextMenuStrip1_Opening;
+            // 
+            // количествоЭлементовToolStripMenuItem
+            // 
+            количествоЭлементовToolStripMenuItem.Name = "количествоЭлементовToolStripMenuItem";
+            количествоЭлементовToolStripMenuItem.Size = new Size(397, 24);
+            количествоЭлементовToolStripMenuItem.Text = "Количество элементов";
+            количествоЭлементовToolStripMenuItem.Click += количествоЭлементовToolStripMenuItem_Click_1;
+            // 
+            // количествоЭлементовСТакимЖеЗначениемToolStripMenuItem
+            // 
+            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.Name = "количествоЭлементовСТакимЖеЗначениемToolStripMenuItem";
+            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.Size = new Size(397, 24);
+            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.Text = "Количество элементов с таким же значением";
+            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.Click += количествоЭлементовСТакимЖеЗначениемToolStripMenuItem_Click;
+            // 
+            // статистикаЗначенийПоТегуToolStripMenuItem
+            // 
+            статистикаЗначенийПоТегуToolStripMenuItem.Name = "статистикаЗначенийПоТегуToolStripMenuItem";
+            статистикаЗначенийПоТегуToolStripMenuItem.Size = new Size(397, 24);
+            статистикаЗначенийПоТегуToolStripMenuItem.Text = "Статистика значений по тегу";
+            статистикаЗначенийПоТегуToolStripMenuItem.Click += статистикаЗначенийПоТегуToolStripMenuItem_Click;
+            // 
             // imageList1
             // 
             imageList1.ColorDepth = ColorDepth.Depth32Bit;
@@ -112,13 +150,17 @@
             // memo
             // 
             memo.BackColor = SystemColors.Info;
+            memo.ContextMenuStrip = contextMenuStrip2;
             memo.Dock = DockStyle.Fill;
             memo.Location = new Point(0, 0);
             memo.Margin = new Padding(3, 4, 3, 4);
             memo.Name = "memo";
-            memo.Size = new Size(1390, 155);
+            memo.ReadOnly = true;
+            memo.ScrollBars = RichTextBoxScrollBars.Vertical;
+            memo.Size = new Size(1390, 190);
             memo.TabIndex = 8;
             memo.Text = "";
+            memo.TextChanged += memo_TextChanged;
             // 
             // splitContainer1
             // 
@@ -136,7 +178,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(tabControl1);
-            splitContainer1.Size = new Size(1390, 572);
+            splitContainer1.Size = new Size(1390, 537);
             splitContainer1.SplitterDistance = 551;
             splitContainer1.TabIndex = 9;
             splitContainer1.SplitterMoved += splitContainer1_SplitterMoved;
@@ -156,7 +198,7 @@
             // findTextBox
             // 
             findTextBox.Dock = DockStyle.Bottom;
-            findTextBox.Location = new Point(2, 543);
+            findTextBox.Location = new Point(2, 508);
             findTextBox.Name = "findTextBox";
             findTextBox.PlaceholderText = "Текст для поиска...";
             findTextBox.Size = new Size(547, 27);
@@ -171,7 +213,7 @@
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(835, 572);
+            tabControl1.Size = new Size(835, 537);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -182,7 +224,7 @@
             tabPage1.Location = new Point(4, 29);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(827, 539);
+            tabPage1.Size = new Size(827, 504);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Содержимое";
             // 
@@ -193,7 +235,7 @@
             rtbValue.Location = new Point(3, 3);
             rtbValue.Name = "rtbValue";
             rtbValue.ReadOnly = true;
-            rtbValue.Size = new Size(821, 533);
+            rtbValue.Size = new Size(821, 498);
             rtbValue.TabIndex = 0;
             rtbValue.Text = "";
             // 
@@ -213,7 +255,7 @@
             splitContainer2.Panel2.AutoScroll = true;
             splitContainer2.Panel2.Controls.Add(memo);
             splitContainer2.Size = new Size(1390, 731);
-            splitContainer2.SplitterDistance = 572;
+            splitContainer2.SplitterDistance = 537;
             splitContainer2.TabIndex = 10;
             // 
             // statusStrip1
@@ -283,32 +325,32 @@
             // 
             toolStripMenuItem2.Image = Properties.Resources.icons8_открыть_папку_48;
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(224, 26);
+            toolStripMenuItem2.Size = new Size(150, 26);
             toolStripMenuItem2.Text = "Открыть";
             toolStripMenuItem2.Click += toolStripMenuItem2_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(221, 6);
+            toolStripSeparator1.Size = new Size(147, 6);
             // 
             // toolStripMenuItem3
             // 
             toolStripMenuItem3.Image = Properties.Resources.icons8_экспорт_excel_48;
             toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(224, 26);
+            toolStripMenuItem3.Size = new Size(150, 26);
             toolStripMenuItem3.Text = "Экспорт";
             toolStripMenuItem3.Click += toolStripMenuItem3_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(221, 6);
+            toolStripSeparator2.Size = new Size(147, 6);
             // 
             // выходToolStripMenuItem
             // 
             выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            выходToolStripMenuItem.Size = new Size(224, 26);
+            выходToolStripMenuItem.Size = new Size(150, 26);
             выходToolStripMenuItem.Text = "Выход";
             // 
             // toolStripMenuItem1
@@ -316,6 +358,7 @@
             toolStripMenuItem1.Name = "toolStripMenuItem1";
             toolStripMenuItem1.Size = new Size(30, 24);
             toolStripMenuItem1.Text = "?";
+            toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
             // openFileDialog1
             // 
@@ -328,6 +371,20 @@
             imageList2.ColorDepth = ColorDepth.Depth32Bit;
             imageList2.ImageSize = new Size(16, 16);
             imageList2.TransparentColor = Color.Transparent;
+            // 
+            // contextMenuStrip2
+            // 
+            contextMenuStrip2.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip2.Items.AddRange(new ToolStripItem[] { очиститьToolStripMenuItem });
+            contextMenuStrip2.Name = "contextMenuStrip2";
+            contextMenuStrip2.Size = new Size(143, 28);
+            // 
+            // очиститьToolStripMenuItem
+            // 
+            очиститьToolStripMenuItem.Name = "очиститьToolStripMenuItem";
+            очиститьToolStripMenuItem.Size = new Size(142, 24);
+            очиститьToolStripMenuItem.Text = "Очистить";
+            очиститьToolStripMenuItem.Click += очиститьToolStripMenuItem_Click;
             // 
             // MainForm
             // 
@@ -345,6 +402,7 @@
             SizeChanged += Form1_SizeChanged;
             KeyDown += Form1_KeyDown;
             ((System.ComponentModel.ISupportInitialize)treeListView1).EndInit();
+            contextMenuStrip1.ResumeLayout(false);
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
@@ -362,6 +420,7 @@
             toolStrip1.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            contextMenuStrip2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -393,5 +452,11 @@
         private Button buttonFindNext;
         private ImageList imageList2;
         private ToolStripStatusLabel tsStatusLabel;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem количествоЭлементовToolStripMenuItem;
+        private ToolStripMenuItem количествоЭлементовСТакимЖеЗначениемToolStripMenuItem;
+        private ToolStripMenuItem статистикаЗначенийПоТегуToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip2;
+        private ToolStripMenuItem очиститьToolStripMenuItem;
     }
 }

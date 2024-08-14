@@ -1,13 +1,6 @@
 using BrightIdeasSoftware;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using OfficeOpenXml;
-using System.Collections;
 using System.Data;
-using System.Data.Common;
-using System.IO;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -16,7 +9,7 @@ using System.Xml.XPath;
 using XMLViewer2.Classes;
 using XMLViewer2.Forms;
 using XMLViewer2.Models;
-using static System.Net.Mime.MediaTypeNames;
+using static OfficeOpenXml.ExcelErrorValue;
 
 namespace XMLViewer2
 {
@@ -24,10 +17,26 @@ namespace XMLViewer2
     {
         XmlViewer _xmlViewer;
         Settings _settings;
-        ExportToExcelSettingsForm _exportToExcelSettingsForm;
-        //string fileName = @"c:\1\test.xml";
-//        string fileName = @"c:\1\F013.xml";
+        Lazy<XmlDoc> _xDocument;
 
+        ExportToExcelSettingsForm _exportToExcelSettingsForm;
+
+        public MainForm(Settings settings, XmlViewer viewer, ExportToExcelSettingsForm exportToExcelSettingsForm, Lazy<XmlDoc> document)
+        {
+            _settings = settings;
+            _xmlViewer = viewer;
+            _exportToExcelSettingsForm = exportToExcelSettingsForm;
+            _xDocument = document;
+
+            InitializeComponent();
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            SetupTreeView();
+            SetupDataBindings();
+
+            ResizeForm();
+        }
 
         public void SetupTreeView()
         {
@@ -52,23 +61,8 @@ namespace XMLViewer2
 
         public void SetupDataBindings()
         {
-            tsStatusLabel.DataBindings.Add(new Binding("Text", settings, "CurrentOperation", true, DataSourceUpdateMode.OnPropertyChanged));
+            tsStatusLabel.DataBindings.Add(new Binding("Text", _settings, "CurrentOperation", true, DataSourceUpdateMode.OnPropertyChanged));
         }
-        public MainForm(Settings settings, XmlViewer viewer, ExportToExcelSettingsForm exportToExcelSettingsForm)
-        {
-            _settings = settings;
-            _xmlViewer = viewer;
-            _exportToExcelSettingsForm = exportToExcelSettingsForm;
-
-            InitializeComponent();
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            SetupTreeView();
-            SetupDataBindings();
-
-            ResizeForm();            
-        }
-
 
         public void ExportToExcel()
         {
@@ -98,36 +92,6 @@ namespace XMLViewer2
             var ancestors = element.Ancestors().Reverse().Select(e => e.Name.LocalName);
             var path = string.Join("/", ancestors.Concat(new[] { element.Name.LocalName }));
             return path;
-        }
-
-        private void количествоЭлементовToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            /*XDocument xdoc = XDocument.Load(fileName);
-
-            string path = "";
-            memo.AppendText(GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path));
-
-            var pathSegments = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
-
-            // Начальное множество элементов - все элементы
-            IEnumerable<XElement> currentElements = xdoc.Elements();
-
-            foreach (var segment in pathSegments)
-            {
-                currentElements = currentElements.Elements(segment);
-            }
-
-
-
-            MessageBox.Show(Convert.ToString(currentElements.Count()));*/
-
-            /* var nodes = FindNodesContainingText(xdoc, "Виталий");
-            //((ModelXML)treeListView1.SelectedObject).node.Name;
-            foreach (var node in nodes)
-            {
-                richTextBox1.AppendText(node.ToString());
-            }*/
-
         }
 
         public IQueryable<XElement> FindNodesContainingText(XDocument document, string searchText)
@@ -190,14 +154,15 @@ namespace XMLViewer2
         {
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private async void toolStripButton1_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 treeListView1.ClearObjects();
+                _xDocument = new Lazy<XmlDoc>(() => new XmlDoc(_settings.FilePath + "\\" + _settings.FileName));
+                //await Task.Run(()=>_xDocument.Load(openFileDialog1.FileName));
                 treeListView1.Roots = _xmlViewer.LoadXmlFile(openFileDialog1.FileName);
             }
-
         }
 
         private async void findTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -205,7 +170,6 @@ namespace XMLViewer2
             if (e.KeyCode == Keys.Enter)
             {
                 var model = await _xmlViewer.SearchAsync(treeListView1, findTextBox.Text);
-                memo.AppendText(model.node.InnerText);
                 ExpandAndSelectFoundNode(model);
             }
         }
@@ -272,6 +236,79 @@ namespace XMLViewer2
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             toolStripButton1_Click(this, null);
+        }
+
+        private void количествоЭлементовToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            string path = "";
+
+            memo.Clear();
+            memo.SelectedRtf = @"{\rtf1\ansi\deff0 \b Количество элементов: \b0\par}";
+            memo.AppendText($"Тэг {GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path)}\r\n");
+            var cnt = _xDocument.Value.GetCountElement(path);
+            memo.AppendText($"Количество = {cnt}\r\n");
+        }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void количествоЭлементовСТакимЖеЗначениемToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            memo.Clear();
+            string path = "";
+            memo.SelectedRtf = @"{\rtf1\ansi\deff0 \b Количество элементов с таким же значением. \b0\par}";
+            memo.AppendText($"Тэг {GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path)} = ");
+            string value = "";
+            if (((ModelXML)(treeListView1.SelectedObject)).node.FirstChild?.NodeType != XmlNodeType.Element)
+                value = ((ModelXML)(treeListView1.SelectedObject)).node.InnerText;
+            memo.AppendText($"{value}\r\n");
+
+            int cnt = _xDocument.Value.GetCountElementsWithValue(path, value);
+            memo.AppendText($"Количество = {cnt}\r\n");
+
+        }
+
+        private void статистикаЗначенийПоТегуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            memo.Clear();
+            string path = "";
+            memo.SelectedRtf = @"{\rtf1\ansi\deff0 \b Статистика значений по тэгу.\b0\par}";
+            memo.AppendText($"Тэг {GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path)}\r\n");
+            //memo.AppendText($"Значение\tКоличество\r\n");
+            var result = _xDocument.Value.GetStatisticsByPath(path);
+
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(@"{\rtf1\ansi {");
+            foreach (var item in result)
+                sb.Append($"\\trowd \\cellx2000 \\cellx4000\\intbl {item.Key}\\cell {item.Value}\\cell\\row");
+            sb.Append("}}");
+            //memo.AppendText(sb.ToString());
+            memo.SelectedRtf = (sb.ToString());
+        }
+
+        private void memo_TextChanged(object sender, EventArgs e)
+        {
+            memo.SelectionStart = memo.Text.Length;
+            memo.SelectionLength = 0;
+            memo.ScrollToCaret();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            /*var rtfTable = @"{\rtf1\ansi {\trowd \cellx2000 \cellx4000\intbl Cell 1\cell Cell 2\cell\row\trowd \cellx2000 \cellx4000\intbl Cell 1\cell Cell 2\cell\row}}";
+            memo.SelectedRtf = rtfTable;
+            memo.SelectionStart = memo.Text.Length;
+            memo.SelectionLength = 0;
+            memo.SelectedRtf = "\\parTEEEEEEEZTTT\\par";*/
+            
+        }
+
+        private void очиститьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            memo.Clear();
         }
     }
 }

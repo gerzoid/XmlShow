@@ -15,7 +15,7 @@ namespace XMLViewer2.Classes
     public sealed class XmlViewer
     {
         private XmlDocument xmlDoc;
-        private XDocument xDoc;
+        //private XDocument xDoc;
 
         public ModelXML model;
 

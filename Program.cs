@@ -31,6 +31,7 @@ namespace XMLViewer2
             services.AddSingleton(settings);
             services.AddTransient<Exporter>();
             services.AddTransient<Searcher>();
+            services.AddSingleton<Lazy<XmlDoc>>();
             services.AddSingleton<XmlViewer>();
             services.AddTransient<MainForm>();
             services.AddTransient<ExportToExcelSettingsForm>();         
