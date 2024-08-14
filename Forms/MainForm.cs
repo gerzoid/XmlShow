@@ -70,6 +70,8 @@ namespace XMLViewer2
             количествоЭлементовToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
             количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
             статистикаЗначенийПоТегуToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            tsButtonExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            tsMenuExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
         }
 
         public void ExportToExcel()
@@ -311,12 +313,30 @@ namespace XMLViewer2
             memo.SelectionStart = memo.Text.Length;
             memo.SelectionLength = 0;
             memo.SelectedRtf = "\\parTEEEEEEEZTTT\\par";*/
-            
+
         }
 
         private void очиститьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             memo.Clear();
+        }
+
+        private void статистикаИспользованияТеговToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            memo.Clear();
+            string path = "";
+            memo.SelectedRtf = @"{\rtf1\ansi\deff0 \b Статистика использования тегов.\b0\par}";
+            var result = _xDocument.Value.GetTagUsageStatistics();
+
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(@"{\rtf1\ansi {");
+            foreach (var item in result)
+                sb.Append($"\\trowd \\cellx4000 \\cellx6000\\intbl {item.Key}\\cell {item.Value}\\cell\\row");
+            sb.Append("}}");
+            //memo.AppendText(sb.ToString());
+            memo.SelectedRtf = (sb.ToString());
+
         }
     }
 }

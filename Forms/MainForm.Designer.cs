@@ -35,6 +35,7 @@
             количествоЭлементовToolStripMenuItem = new ToolStripMenuItem();
             количествоЭлементовСТакимЖеЗначениемToolStripMenuItem = new ToolStripMenuItem();
             статистикаЗначенийПоТегуToolStripMenuItem = new ToolStripMenuItem();
+            статистикаИспользованияТеговToolStripMenuItem = new ToolStripMenuItem();
             imageList1 = new ImageList(components);
             memo = new RichTextBox();
             contextMenuStrip2 = new ContextMenuStrip(components);
@@ -50,12 +51,12 @@
             tsStatusLabel = new ToolStripStatusLabel();
             toolStrip1 = new ToolStrip();
             toolStripButton1 = new ToolStripButton();
-            toolStripButton2 = new ToolStripButton();
+            tsButtonExportExcel = new ToolStripButton();
             menuStrip1 = new MenuStrip();
             файлToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem2 = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
-            toolStripMenuItem3 = new ToolStripMenuItem();
+            tsMenuExportExcel = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             выходToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
@@ -111,9 +112,9 @@
             // treeContextMenu
             // 
             treeContextMenu.ImageScalingSize = new Size(20, 20);
-            treeContextMenu.Items.AddRange(new ToolStripItem[] { количествоЭлементовToolStripMenuItem, количествоЭлементовСТакимЖеЗначениемToolStripMenuItem, статистикаЗначенийПоТегуToolStripMenuItem });
+            treeContextMenu.Items.AddRange(new ToolStripItem[] { количествоЭлементовToolStripMenuItem, количествоЭлементовСТакимЖеЗначениемToolStripMenuItem, статистикаЗначенийПоТегуToolStripMenuItem, статистикаИспользованияТеговToolStripMenuItem });
             treeContextMenu.Name = "contextMenuStrip1";
-            treeContextMenu.Size = new Size(398, 104);
+            treeContextMenu.Size = new Size(398, 100);
             treeContextMenu.Opening += contextMenuStrip1_Opening;
             // 
             // количествоЭлементовToolStripMenuItem
@@ -136,6 +137,13 @@
             статистикаЗначенийПоТегуToolStripMenuItem.Size = new Size(397, 24);
             статистикаЗначенийПоТегуToolStripMenuItem.Text = "Статистика значений по тегу";
             статистикаЗначенийПоТегуToolStripMenuItem.Click += статистикаЗначенийПоТегуToolStripMenuItem_Click;
+            // 
+            // статистикаИспользованияТеговToolStripMenuItem
+            // 
+            статистикаИспользованияТеговToolStripMenuItem.Name = "статистикаИспользованияТеговToolStripMenuItem";
+            статистикаИспользованияТеговToolStripMenuItem.Size = new Size(397, 24);
+            статистикаИспользованияТеговToolStripMenuItem.Text = "Статистика использования тегов";
+            статистикаИспользованияТеговToolStripMenuItem.Click += статистикаИспользованияТеговToolStripMenuItem_Click;
             // 
             // imageList1
             // 
@@ -291,7 +299,7 @@
             // toolStrip1
             // 
             toolStrip1.ImageScalingSize = new Size(20, 20);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, tsButtonExportExcel });
             toolStrip1.Location = new Point(0, 28);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1390, 27);
@@ -308,15 +316,15 @@
             toolStripButton1.Text = "Открыть";
             toolStripButton1.Click += toolStripButton1_Click;
             // 
-            // toolStripButton2
+            // tsButtonExportExcel
             // 
-            toolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton2.Image = Properties.Resources.icons8_экспорт_excel_48;
-            toolStripButton2.ImageTransparentColor = Color.Magenta;
-            toolStripButton2.Name = "toolStripButton2";
-            toolStripButton2.Size = new Size(29, 24);
-            toolStripButton2.Text = "Экспорт в Excel";
-            toolStripButton2.Click += toolStripButton2_Click;
+            tsButtonExportExcel.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            tsButtonExportExcel.Image = Properties.Resources.icons8_экспорт_excel_48;
+            tsButtonExportExcel.ImageTransparentColor = Color.Magenta;
+            tsButtonExportExcel.Name = "tsButtonExportExcel";
+            tsButtonExportExcel.Size = new Size(29, 24);
+            tsButtonExportExcel.Text = "Экспорт в Excel";
+            tsButtonExportExcel.Click += toolStripButton2_Click;
             // 
             // menuStrip1
             // 
@@ -330,7 +338,7 @@
             // 
             // файлToolStripMenuItem
             // 
-            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem2, toolStripSeparator1, toolStripMenuItem3, toolStripSeparator2, выходToolStripMenuItem });
+            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem2, toolStripSeparator1, tsMenuExportExcel, toolStripSeparator2, выходToolStripMenuItem });
             файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             файлToolStripMenuItem.Size = new Size(59, 24);
             файлToolStripMenuItem.Text = "Файл";
@@ -339,32 +347,32 @@
             // 
             toolStripMenuItem2.Image = Properties.Resources.icons8_открыть_папку_48;
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(150, 26);
+            toolStripMenuItem2.Size = new Size(224, 26);
             toolStripMenuItem2.Text = "Открыть";
             toolStripMenuItem2.Click += toolStripMenuItem2_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(147, 6);
+            toolStripSeparator1.Size = new Size(221, 6);
             // 
-            // toolStripMenuItem3
+            // tsMenuExportExcel
             // 
-            toolStripMenuItem3.Image = Properties.Resources.icons8_экспорт_excel_48;
-            toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(150, 26);
-            toolStripMenuItem3.Text = "Экспорт";
-            toolStripMenuItem3.Click += toolStripMenuItem3_Click;
+            tsMenuExportExcel.Image = Properties.Resources.icons8_экспорт_excel_48;
+            tsMenuExportExcel.Name = "tsMenuExportExcel";
+            tsMenuExportExcel.Size = new Size(224, 26);
+            tsMenuExportExcel.Text = "Экспорт";
+            tsMenuExportExcel.Click += toolStripMenuItem3_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(147, 6);
+            toolStripSeparator2.Size = new Size(221, 6);
             // 
             // выходToolStripMenuItem
             // 
             выходToolStripMenuItem.Name = "выходToolStripMenuItem";
-            выходToolStripMenuItem.Size = new Size(150, 26);
+            выходToolStripMenuItem.Size = new Size(224, 26);
             выходToolStripMenuItem.Text = "Выход";
             // 
             // toolStripMenuItem1
@@ -439,7 +447,7 @@
         private ToolStripMenuItem файлToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItem2;
         private ToolStripMenuItem toolStripMenuItem1;
-        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem tsMenuExportExcel;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem выходToolStripMenuItem;
@@ -447,7 +455,7 @@
         private TabPage tabPage1;
         private TextBox  findTextBox;
         private RichTextBox rtbValue;
-        private ToolStripButton toolStripButton2;
+        private ToolStripButton tsButtonExportExcel;
         private OpenFileDialog openFileDialog1;
         private Button buttonFindNext;
         private ImageList imageList2;
@@ -458,5 +466,6 @@
         private ToolStripMenuItem статистикаЗначенийПоТегуToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip2;
         private ToolStripMenuItem очиститьToolStripMenuItem;
+        private ToolStripMenuItem статистикаИспользованияТеговToolStripMenuItem;
     }
 }

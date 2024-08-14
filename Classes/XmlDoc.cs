@@ -34,5 +34,29 @@ namespace XMLViewer2.Classes
                     .ToDictionary(g => g.Key, g => g
                     .Count());
         }
+
+        public Dictionary<string, int> GetTagUsageStatistics()
+        {
+            Dictionary<string, int> tagStatistics = new Dictionary<string, int>();
+            ProcessElement(doc.Root, "", tagStatistics);
+            return tagStatistics;
+        }
+
+        private void ProcessElement(XElement element, string currentPath, Dictionary<string, int> tagStatistics)
+        {         
+            string elementPath = string.IsNullOrEmpty(currentPath) ? $"/{element.Name}" : $"{currentPath}/{element.Name}";         
+            if (tagStatistics.ContainsKey(elementPath))
+            {
+                tagStatistics[elementPath]++;
+            }
+            else
+            {
+                tagStatistics[elementPath] = 1;
+            }         
+            foreach (XElement child in element.Elements())
+            {
+                ProcessElement(child, elementPath, tagStatistics);
+            }
+        }
     }
 }
