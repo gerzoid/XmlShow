@@ -338,5 +338,11 @@ namespace XMLViewer2
             memo.SelectedRtf = (sb.ToString());
 
         }
+
+        private void копироватьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            memo.SelectAll();
+            memo.Copy();
+        }
     }
 }

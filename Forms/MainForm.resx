@@ -128,7 +128,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
         LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
         SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAqg4AAAJNU0Z0AUkBTAIBAQQB
-        AAGwAQMBsAEDARQBAAENAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABUAMAARoDAAEBAQABIAUAAYAB
+        AAHAAQMBwAEDARQBAAENAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABUAMAARoDAAEBAQABIAUAAYAB
         IP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8AYgADUwGmA1MBpgNTAaYDUwGmA1MBpgNTAaYD
         UwGmA1MBpgNTAaYDUwGmA1MBpgNTAaYDUwGmA1MBpgNTAaYDVAGmA1QBpgNUAaYDUgGgA0MBdQNTAaYD
         UwGmA1MBpgNTAaYDUwGmA1MBpgNTAaYDUwGmA1MBpgNTAaYDUwGmA1MBpgNTAaYDUwGmA1MBpgNUAaYD
@@ -193,7 +193,7 @@
         AAHAAQMB/gEAAQcHAAX/BwAF/wIACw==
 </value>
   </data>
-  <metadata name="contextMenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="contextMenuLog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1330, 17</value>
   </metadata>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
