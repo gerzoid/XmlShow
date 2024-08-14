@@ -160,7 +160,6 @@
             // 
             memo.BackColor = SystemColors.Info;
             memo.ContextMenuStrip = contextMenuLog;
-            memo.Dock = DockStyle.Fill;
             memo.Location = new Point(0, 0);
             memo.Margin = new Padding(3, 4, 3, 4);
             memo.Name = "memo";

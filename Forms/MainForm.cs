@@ -148,6 +148,8 @@ namespace XMLViewer2
             buttonFindNext.Left = (findTextBox.Width) - buttonFindNext.Width;
             treeListView1.Height = splitContainer1.Panel1.Height - findTextBox.Height - 5;
             splitContainer2.Height = this.Height - 10;
+            memo.Width = splitContainer2.Panel2.Width-20;
+            memo.Height = splitContainer2.Panel2.Height-125;
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
