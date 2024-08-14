@@ -23,6 +23,7 @@ namespace XMLViewer2.Classes
         Exporter _exporter;
         Settings _settings;
 
+        public bool FileOpened = false;
         public XmlViewer(Exporter exporter, Searcher searcher, Settings settings)
         {            
             model = new ModelXML();
@@ -33,6 +34,8 @@ namespace XMLViewer2.Classes
 
         public IEnumerable LoadXmlFile(string filePath)
         {
+            _settings.FileIsOpened = false;
+
             model = new ModelXML();
             xmlDoc = new XmlDocument();                       
             
@@ -41,6 +44,7 @@ namespace XMLViewer2.Classes
 
             xmlDoc.Load(filePath);
             model.node = xmlDoc;
+            _settings.FileIsOpened = true;
             return model.GetChildrens();
         }
 

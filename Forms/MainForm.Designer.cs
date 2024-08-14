@@ -31,12 +31,14 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             treeListView1 = new BrightIdeasSoftware.TreeListView();
-            contextMenuStrip1 = new ContextMenuStrip(components);
+            treeContextMenu = new ContextMenuStrip(components);
             количествоЭлементовToolStripMenuItem = new ToolStripMenuItem();
             количествоЭлементовСТакимЖеЗначениемToolStripMenuItem = new ToolStripMenuItem();
             статистикаЗначенийПоТегуToolStripMenuItem = new ToolStripMenuItem();
             imageList1 = new ImageList(components);
             memo = new RichTextBox();
+            contextMenuStrip2 = new ContextMenuStrip(components);
+            очиститьToolStripMenuItem = new ToolStripMenuItem();
             splitContainer1 = new SplitContainer();
             buttonFindNext = new Button();
             findTextBox = new TextBox();
@@ -59,10 +61,9 @@
             toolStripMenuItem1 = new ToolStripMenuItem();
             openFileDialog1 = new OpenFileDialog();
             imageList2 = new ImageList(components);
-            contextMenuStrip2 = new ContextMenuStrip(components);
-            очиститьToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)treeListView1).BeginInit();
-            contextMenuStrip1.SuspendLayout();
+            treeContextMenu.SuspendLayout();
+            contextMenuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -76,7 +77,6 @@
             statusStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
-            contextMenuStrip2.SuspendLayout();
             SuspendLayout();
             // 
             // treeListView1
@@ -84,7 +84,7 @@
             treeListView1.Activation = ItemActivation.OneClick;
             treeListView1.AlternateRowBackColor = Color.FromArgb(255, 128, 0);
             treeListView1.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
-            treeListView1.ContextMenuStrip = contextMenuStrip1;
+            treeListView1.ContextMenuStrip = treeContextMenu;
             treeListView1.Dock = DockStyle.Top;
             treeListView1.EmptyListMsg = "";
             treeListView1.EmptyListMsgFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
@@ -108,13 +108,13 @@
             treeListView1.ItemSelectionChanged += treeListView1_ItemSelectionChanged;
             treeListView1.ContextMenuStripChanged += treeListView1_ContextMenuStripChanged;
             // 
-            // contextMenuStrip1
+            // treeContextMenu
             // 
-            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { количествоЭлементовToolStripMenuItem, количествоЭлементовСТакимЖеЗначениемToolStripMenuItem, статистикаЗначенийПоТегуToolStripMenuItem });
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(398, 76);
-            contextMenuStrip1.Opening += contextMenuStrip1_Opening;
+            treeContextMenu.ImageScalingSize = new Size(20, 20);
+            treeContextMenu.Items.AddRange(new ToolStripItem[] { количествоЭлементовToolStripMenuItem, количествоЭлементовСТакимЖеЗначениемToolStripMenuItem, статистикаЗначенийПоТегуToolStripMenuItem });
+            treeContextMenu.Name = "contextMenuStrip1";
+            treeContextMenu.Size = new Size(398, 104);
+            treeContextMenu.Opening += contextMenuStrip1_Opening;
             // 
             // количествоЭлементовToolStripMenuItem
             // 
@@ -161,6 +161,20 @@
             memo.TabIndex = 8;
             memo.Text = "";
             memo.TextChanged += memo_TextChanged;
+            // 
+            // contextMenuStrip2
+            // 
+            contextMenuStrip2.ImageScalingSize = new Size(20, 20);
+            contextMenuStrip2.Items.AddRange(new ToolStripItem[] { очиститьToolStripMenuItem });
+            contextMenuStrip2.Name = "contextMenuStrip2";
+            contextMenuStrip2.Size = new Size(143, 28);
+            // 
+            // очиститьToolStripMenuItem
+            // 
+            очиститьToolStripMenuItem.Name = "очиститьToolStripMenuItem";
+            очиститьToolStripMenuItem.Size = new Size(142, 24);
+            очиститьToolStripMenuItem.Text = "Очистить";
+            очиститьToolStripMenuItem.Click += очиститьToolStripMenuItem_Click;
             // 
             // splitContainer1
             // 
@@ -372,20 +386,6 @@
             imageList2.ImageSize = new Size(16, 16);
             imageList2.TransparentColor = Color.Transparent;
             // 
-            // contextMenuStrip2
-            // 
-            contextMenuStrip2.ImageScalingSize = new Size(20, 20);
-            contextMenuStrip2.Items.AddRange(new ToolStripItem[] { очиститьToolStripMenuItem });
-            contextMenuStrip2.Name = "contextMenuStrip2";
-            contextMenuStrip2.Size = new Size(143, 28);
-            // 
-            // очиститьToolStripMenuItem
-            // 
-            очиститьToolStripMenuItem.Name = "очиститьToolStripMenuItem";
-            очиститьToolStripMenuItem.Size = new Size(142, 24);
-            очиститьToolStripMenuItem.Text = "Очистить";
-            очиститьToolStripMenuItem.Click += очиститьToolStripMenuItem_Click;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -402,7 +402,8 @@
             SizeChanged += Form1_SizeChanged;
             KeyDown += Form1_KeyDown;
             ((System.ComponentModel.ISupportInitialize)treeListView1).EndInit();
-            contextMenuStrip1.ResumeLayout(false);
+            treeContextMenu.ResumeLayout(false);
+            contextMenuStrip2.ResumeLayout(false);
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
@@ -420,7 +421,6 @@
             toolStrip1.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            contextMenuStrip2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -452,7 +452,7 @@
         private Button buttonFindNext;
         private ImageList imageList2;
         private ToolStripStatusLabel tsStatusLabel;
-        private ContextMenuStrip contextMenuStrip1;
+        private ContextMenuStrip treeContextMenu;
         private ToolStripMenuItem количествоЭлементовToolStripMenuItem;
         private ToolStripMenuItem количествоЭлементовСТакимЖеЗначениемToolStripMenuItem;
         private ToolStripMenuItem статистикаЗначенийПоТегуToolStripMenuItem;

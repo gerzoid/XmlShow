@@ -35,6 +35,9 @@ namespace XMLViewer2.Models
         [JsonIgnore]
         public string FileName { get; set; }
 
+        private bool _fileIsOpened = false;
+        [JsonIgnore]
+        public bool FileIsOpened {  get { return _fileIsOpened; } set { _fileIsOpened = value; OnPropertyChanged(); } }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

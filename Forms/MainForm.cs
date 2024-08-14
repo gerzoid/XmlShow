@@ -38,6 +38,11 @@ namespace XMLViewer2
             ResizeForm();
         }
 
+        public void CheckMenuEnabled()
+        {
+
+        }
+
         public void SetupTreeView()
         {
             OLVColumn column = new OLVColumn();
@@ -62,6 +67,9 @@ namespace XMLViewer2
         public void SetupDataBindings()
         {
             tsStatusLabel.DataBindings.Add(new Binding("Text", _settings, "CurrentOperation", true, DataSourceUpdateMode.OnPropertyChanged));
+            количествоЭлементовToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            статистикаЗначенийПоТегуToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
         }
 
         public void ExportToExcel()
