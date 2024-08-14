@@ -29,18 +29,8 @@ namespace XMLViewer2
 //        string fileName = @"c:\1\F013.xml";
 
 
-        public MainForm(Settings settings, XmlViewer viewer, ExportToExcelSettingsForm exportToExcelSettingsForm)
+        public void SetupTreeView()
         {
-            _settings = settings;
-            _xmlViewer = viewer;
-            _exportToExcelSettingsForm = exportToExcelSettingsForm;
-
-            InitializeComponent();
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            //settings = SettingsSerializer.Deserialize();
-
-            //xmlViewer = new XmlViewer();
             OLVColumn column = new OLVColumn();
             column.Text = "Òýã";
             column.Width = 300;
@@ -58,13 +48,25 @@ namespace XMLViewer2
             treeListView1.Columns.Add(column2);
             treeListView1.CanExpandGetter = _xmlViewer.CanExpandGetter;
             treeListView1.ChildrenGetter = _xmlViewer.ChildrenGetter;
+        }
 
-            ResizeForm();
-
-            //treeListView1.Roots = _xmlViewer.LoadXmlFile(fileName);
-            treeListView1.BaseSmallImageList = imageList1;
-
+        public void SetupDataBindings()
+        {
             tsStatusLabel.DataBindings.Add(new Binding("Text", settings, "CurrentOperation", true, DataSourceUpdateMode.OnPropertyChanged));
+        }
+        public MainForm(Settings settings, XmlViewer viewer, ExportToExcelSettingsForm exportToExcelSettingsForm)
+        {
+            _settings = settings;
+            _xmlViewer = viewer;
+            _exportToExcelSettingsForm = exportToExcelSettingsForm;
+
+            InitializeComponent();
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            SetupTreeView();
+            SetupDataBindings();
+
+            ResizeForm();            
         }
 
 

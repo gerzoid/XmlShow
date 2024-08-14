@@ -16,7 +16,7 @@ namespace XMLViewer2.Forms
     {
         Settings _settings;
         XmlViewer _viewer;
-        
+
         bool isBinded = false;
         public ExportToExcelSettingsForm(Settings settings, XmlViewer viewer)
         {
@@ -29,8 +29,8 @@ namespace XMLViewer2.Forms
         private async void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
-            await Task.Run(()=>_viewer.Export());
-            
+            await Task.Run(() => _viewer.Export());
+
             Close();
         }
 
@@ -46,6 +46,11 @@ namespace XMLViewer2.Forms
         {
             SettingsSerializer.Serialize(_settings);
             //SettingsSerializer.Serialize(settings);
+        }
+
+        private void ExportToExcelSettingsForm_Shown(object sender, EventArgs e)
+        {
+            button1.Enabled = true;
         }
     }
 }

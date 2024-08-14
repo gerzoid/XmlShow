@@ -69,6 +69,7 @@
             Text = "Экспорт в Excel. Настройки";
             FormClosing += ExportToExcelSettingsForm_FormClosing;
             Load += ExportToExcelSettingsForm_Load;
+            Shown += ExportToExcelSettingsForm_Shown;
             ((System.ComponentModel.ISupportInitialize)settingsExportToExcelsBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();

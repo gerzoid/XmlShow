@@ -23,7 +23,9 @@ namespace XMLViewer2.Classes
         
         string GetNodename(XmlNode node)
         {
-            return node.ParentNode?.Name + "/" + node.Name;
+            if (_settings.ColumnNameWithParentName)
+                return node.ParentNode?.Name + "/" + node.Name;
+            return node.Name;
         }
         void FillDataTable(ModelXML model)
         {
