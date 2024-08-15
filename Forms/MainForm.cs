@@ -253,12 +253,11 @@ namespace XMLViewer2
         private void количествоЭлементовToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             string path = "";
-
-            memo.Clear();
-            memo.SelectedRtf = @"{\rtf1\ansi\deff0 \b Количество элементов: \b0\par}";
-            memo.AppendText($"Тэг {GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path)}\r\n");
+            RtfHelper rtfHelper = new RtfHelper(memo);
+            rtfHelper.AddString("Количество элементов:", true);
+            rtfHelper.AddString($"Тэг {GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path)}");
             var cnt = _xDocument.Value.GetCountElement(path);
-            memo.AppendText($"Количество = {cnt}\r\n");
+            rtfHelper.AddString($"Количество = {cnt}");
         }
 
         private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -268,37 +267,25 @@ namespace XMLViewer2
 
         private void количествоЭлементовСТакимЖеЗначениемToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            memo.Clear();
+            RtfHelper rtfHelper = new RtfHelper(memo);
             string path = "";
-            memo.SelectedRtf = @"{\rtf1\ansi\deff0 \b Количество элементов с таким же значением. \b0\par}";
-            memo.AppendText($"Тэг {GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path)} = ");
+            rtfHelper.AddString("Количество элементов с таким же значением.", true);
             string value = "";
             if (((ModelXML)(treeListView1.SelectedObject)).node.FirstChild?.NodeType != XmlNodeType.Element)
                 value = ((ModelXML)(treeListView1.SelectedObject)).node.InnerText;
-            memo.AppendText($"{value}\r\n");
-
+            rtfHelper.AddString($"Тэг {GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path)} = {value}");
             int cnt = _xDocument.Value.GetCountElementsWithValue(path, value);
-            memo.AppendText($"Количество = {cnt}\r\n");
+            rtfHelper.AddString($"Количество = {cnt}");
 
         }
 
         private void статистикаЗначенийПоТегуToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            memo.Clear();
+            RtfHelper rtfHelper = new RtfHelper(memo);
             string path = "";
-            memo.SelectedRtf = @"{\rtf1\ansi\deff0 \b Статистика значений по тэгу.\b0\par}";
-            memo.AppendText($"Тэг {GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path)}\r\n");
-            //memo.AppendText($"Значение\tКоличество\r\n");
-            var result = _xDocument.Value.GetStatisticsByPath(path);
-
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append(@"{\rtf1\ansi {");
-            foreach (var item in result)
-                sb.Append($"\\trowd \\cellx2000 \\cellx4000\\intbl {item.Key}\\cell {item.Value}\\cell\\row");
-            sb.Append("}}");
-            //memo.AppendText(sb.ToString());
-            memo.SelectedRtf = (sb.ToString());
+            rtfHelper.AddString("Статистика значений по тэгу.", true);
+            rtfHelper.AddString($"Тэг {GetParentPath(((ModelXML)(treeListView1.SelectedObject)).node, ref path)}");
+            rtfHelper.AddTable(_xDocument.Value.GetStatisticsByPath(path));
         }
 
         private void memo_TextChanged(object sender, EventArgs e)
@@ -310,6 +297,13 @@ namespace XMLViewer2
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            
+            RtfHelper rtfHelper = new RtfHelper(memo);
+            rtfHelper.AddString("Проверка", true);
+            rtfHelper.AddString(" 134123412343214а");
+            Dictionary<string, int> dic = new Dictionary<string, int>() { { "sdfsfds", 2 }, { "dfdsfsd", 3 } };
+            rtfHelper.AddTable(dic);
+            memo.Rtf = rtfHelper.GetString();
             /*var rtfTable = @"{\rtf1\ansi {\trowd \cellx2000 \cellx4000\intbl Cell 1\cell Cell 2\cell\row\trowd \cellx2000 \cellx4000\intbl Cell 1\cell Cell 2\cell\row}}";
             memo.SelectedRtf = rtfTable;
             memo.SelectionStart = memo.Text.Length;
