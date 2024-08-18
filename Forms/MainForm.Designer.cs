@@ -32,9 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             treeListView1 = new BrightIdeasSoftware.TreeListView();
             treeContextMenu = new ContextMenuStrip(components);
+            копироватьЗначениеToolStripMenuItem = new ToolStripMenuItem();
+            копироватьИмяТегаToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator3 = new ToolStripSeparator();
+            статистикаToolStripMenuItem = new ToolStripMenuItem();
             количествоЭлементовToolStripMenuItem = new ToolStripMenuItem();
             количествоЭлементовСТакимЖеЗначениемToolStripMenuItem = new ToolStripMenuItem();
-            статистикаЗначенийПоТегуToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem3 = new ToolStripMenuItem();
             статистикаИспользованияТеговToolStripMenuItem = new ToolStripMenuItem();
             imageList1 = new ImageList(components);
             memo = new RichTextBox();
@@ -113,36 +117,62 @@
             // treeContextMenu
             // 
             treeContextMenu.ImageScalingSize = new Size(20, 20);
-            treeContextMenu.Items.AddRange(new ToolStripItem[] { количествоЭлементовToolStripMenuItem, количествоЭлементовСТакимЖеЗначениемToolStripMenuItem, статистикаЗначенийПоТегуToolStripMenuItem, статистикаИспользованияТеговToolStripMenuItem });
+            treeContextMenu.Items.AddRange(new ToolStripItem[] { копироватьЗначениеToolStripMenuItem, копироватьИмяТегаToolStripMenuItem, toolStripSeparator3, статистикаToolStripMenuItem });
             treeContextMenu.Name = "contextMenuStrip1";
-            treeContextMenu.Size = new Size(398, 100);
+            treeContextMenu.Size = new Size(233, 110);
             treeContextMenu.Opening += contextMenuStrip1_Opening;
+            // 
+            // копироватьЗначениеToolStripMenuItem
+            // 
+            копироватьЗначениеToolStripMenuItem.Name = "копироватьЗначениеToolStripMenuItem";
+            копироватьЗначениеToolStripMenuItem.Size = new Size(232, 24);
+            копироватьЗначениеToolStripMenuItem.Text = "Копировать значение";
+            копироватьЗначениеToolStripMenuItem.Click += копироватьЗначениеToolStripMenuItem_Click;
+            // 
+            // копироватьИмяТегаToolStripMenuItem
+            // 
+            копироватьИмяТегаToolStripMenuItem.Name = "копироватьИмяТегаToolStripMenuItem";
+            копироватьИмяТегаToolStripMenuItem.Size = new Size(232, 24);
+            копироватьИмяТегаToolStripMenuItem.Text = "Копировать имя тега";
+            копироватьИмяТегаToolStripMenuItem.Click += копироватьИмяТегаToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new Size(229, 6);
+            // 
+            // статистикаToolStripMenuItem
+            // 
+            статистикаToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { количествоЭлементовToolStripMenuItem, количествоЭлементовСТакимЖеЗначениемToolStripMenuItem, toolStripMenuItem3, статистикаИспользованияТеговToolStripMenuItem });
+            статистикаToolStripMenuItem.Name = "статистикаToolStripMenuItem";
+            статистикаToolStripMenuItem.Size = new Size(232, 24);
+            статистикаToolStripMenuItem.Text = "Статистика";
             // 
             // количествоЭлементовToolStripMenuItem
             // 
             количествоЭлементовToolStripMenuItem.Name = "количествоЭлементовToolStripMenuItem";
-            количествоЭлементовToolStripMenuItem.Size = new Size(397, 24);
+            количествоЭлементовToolStripMenuItem.Size = new Size(411, 26);
             количествоЭлементовToolStripMenuItem.Text = "Количество элементов";
             количествоЭлементовToolStripMenuItem.Click += количествоЭлементовToolStripMenuItem_Click_1;
             // 
             // количествоЭлементовСТакимЖеЗначениемToolStripMenuItem
             // 
             количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.Name = "количествоЭлементовСТакимЖеЗначениемToolStripMenuItem";
-            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.Size = new Size(397, 24);
+            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.Size = new Size(411, 26);
             количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.Text = "Количество элементов с таким же значением";
             количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.Click += количествоЭлементовСТакимЖеЗначениемToolStripMenuItem_Click;
             // 
-            // статистикаЗначенийПоТегуToolStripMenuItem
+            // toolStripMenuItem3
             // 
-            статистикаЗначенийПоТегуToolStripMenuItem.Name = "статистикаЗначенийПоТегуToolStripMenuItem";
-            статистикаЗначенийПоТегуToolStripMenuItem.Size = new Size(397, 24);
-            статистикаЗначенийПоТегуToolStripMenuItem.Text = "Статистика значений по тегу";
-            статистикаЗначенийПоТегуToolStripMenuItem.Click += статистикаЗначенийПоТегуToolStripMenuItem_Click;
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            toolStripMenuItem3.Size = new Size(411, 26);
+            toolStripMenuItem3.Text = "Статистика значений по тегу";
+            toolStripMenuItem3.Click += статистикаЗначенийПоТегуToolStripMenuItem_Click;
             // 
             // статистикаИспользованияТеговToolStripMenuItem
             // 
             статистикаИспользованияТеговToolStripMenuItem.Name = "статистикаИспользованияТеговToolStripMenuItem";
-            статистикаИспользованияТеговToolStripMenuItem.Size = new Size(397, 24);
+            статистикаИспользованияТеговToolStripMenuItem.Size = new Size(411, 26);
             статистикаИспользованияТеговToolStripMenuItem.Text = "Статистика использования тегов";
             статистикаИспользованияТеговToolStripMenuItem.Click += статистикаИспользованияТеговToolStripMenuItem_Click;
             // 
@@ -468,12 +498,16 @@
         private ImageList imageList2;
         private ToolStripStatusLabel tsStatusLabel;
         private ContextMenuStrip treeContextMenu;
-        private ToolStripMenuItem количествоЭлементовToolStripMenuItem;
-        private ToolStripMenuItem количествоЭлементовСТакимЖеЗначениемToolStripMenuItem;
-        private ToolStripMenuItem статистикаЗначенийПоТегуToolStripMenuItem;
         private ContextMenuStrip contextMenuLog;
         private ToolStripMenuItem очиститьToolStripMenuItem;
-        private ToolStripMenuItem статистикаИспользованияТеговToolStripMenuItem;
         private ToolStripMenuItem копироватьToolStripMenuItem;
+        private ToolStripMenuItem статистикаToolStripMenuItem;
+        private ToolStripMenuItem количествоЭлементовToolStripMenuItem;
+        private ToolStripMenuItem количествоЭлементовСТакимЖеЗначениемToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem статистикаИспользованияТеговToolStripMenuItem;
+        private ToolStripMenuItem копироватьЗначениеToolStripMenuItem;
+        private ToolStripMenuItem копироватьИмяТегаToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator3;
     }
 }

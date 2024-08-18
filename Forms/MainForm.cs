@@ -69,7 +69,7 @@ namespace XMLViewer2
             tsStatusLabel.DataBindings.Add(new Binding("Text", _settings, "CurrentOperation", true, DataSourceUpdateMode.OnPropertyChanged));
             количествоЭлементовToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
             количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
-            статистикаЗначенийПоТегуToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            toolStripMenuItem3.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
             tsButtonExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
             tsMenuExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
         }
@@ -148,8 +148,8 @@ namespace XMLViewer2
             buttonFindNext.Left = (findTextBox.Width) - buttonFindNext.Width;
             treeListView1.Height = splitContainer1.Panel1.Height - findTextBox.Height - 5;
             splitContainer2.Height = this.Height - 10;
-            memo.Width = splitContainer2.Panel2.Width-20;
-            memo.Height = splitContainer2.Panel2.Height-125;
+            memo.Width = splitContainer2.Panel2.Width - 20;
+            memo.Height = splitContainer2.Panel2.Height - 125;
         }
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
@@ -297,7 +297,7 @@ namespace XMLViewer2
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            
+
             RtfHelper rtfHelper = new RtfHelper(memo);
             rtfHelper.AddString("Проверка", true);
             rtfHelper.AddString(" 134123412343214а");
@@ -339,6 +339,23 @@ namespace XMLViewer2
         {
             memo.SelectAll();
             memo.Copy();
+        }
+
+        private void копироватьЗначениеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeListView1.SelectedObject is ModelXML model && model != null)
+            {
+                if (model.isAttribute)
+                    Clipboard.SetText(model.attribute.InnerText);
+                if (model.node?.FirstChild?.NodeType != XmlNodeType.Element)
+                    Clipboard.SetText(model?.node?.InnerText);
+            }
+        }
+
+        private void копироватьИмяТегаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (treeListView1.SelectedObject is ModelXML model && model != null)
+                Clipboard.SetText(model.node.Name);
         }
     }
 }
