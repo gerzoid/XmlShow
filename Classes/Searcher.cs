@@ -15,6 +15,7 @@ namespace XMLViewer2.Classes
         private ModelXML _lastFoundNode = null;
        
         private string _currentSearchTerm = null;
+
         private CancellationTokenSource _cancellationTokenSource;
         private ModelXML FindNextNode(TreeListView treeListView, string searchTerm)
         {
@@ -87,8 +88,8 @@ namespace XMLViewer2.Classes
             var cancelationToken = _cancellationTokenSource.Token;
 
             try
-            {
-                var res = await Task.Run(() => PerformSearch(treeListView, searchTerm), cancelationToken);
+            {                
+                var res = await Task.Run(() => PerformSearch(treeListView, searchTerm), cancelationToken);                
                 return res;
             }
             catch (OperationCanceledException)
@@ -130,10 +131,7 @@ namespace XMLViewer2.Classes
 
             try
             {
-                var res = await Task.Run(() => FindNextNode(treeListView, _currentSearchTerm), cancelationToken);
-                //if (res==null)
-                  //  MessageBox.Show("Больше совпадений не найдено.");
-                return res;
+                return await Task.Run(() => FindNextNode(treeListView, _currentSearchTerm), cancelationToken);
             }
             catch (OperationCanceledException)
             {

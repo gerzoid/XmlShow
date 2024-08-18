@@ -102,6 +102,7 @@ namespace XMLViewer2.Classes
         {
             var model = await _searcher.SearchNextAsync(treeListView);
             _settings.SearchNextEnabled = model != null;
+
             return model;
         }
 

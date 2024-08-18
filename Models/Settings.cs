@@ -39,6 +39,10 @@ namespace XMLViewer2.Models
         [JsonIgnore]
         public bool FileIsOpened {  get { return _fileIsOpened; } set { _fileIsOpened = value; OnPropertyChanged(); } }
 
+        private bool _enabledSearch = false;
+        [JsonIgnore]
+        public bool EnabledSearch { get { return _enabledSearch; } set { _enabledSearch = value; OnPropertyChanged(); } }
+
         private bool _searchNextEnabled = false;
         [JsonIgnore]
         public bool SearchNextEnabled { get { return _searchNextEnabled; } set {

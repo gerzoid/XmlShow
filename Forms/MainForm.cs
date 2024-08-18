@@ -71,8 +71,8 @@ namespace XMLViewer2
             количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
             toolStripMenuItem3.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
             tsButtonExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
-            tsMenuExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
-            //buttonFindNext.DataBindings.Add(new Binding("Visible", _settings, "SearchNextEnabled", true, DataSourceUpdateMode.OnPropertyChanged));
+            tsMenuExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));            
+            buttonFindNext.DataBindings.Add(new Binding("Enabled", _settings, "EnabledSearch", true, DataSourceUpdateMode.OnPropertyChanged));
             buttonFindNext.DataBindings.Add(new Binding("Visible", _settings, "SearchNextEnabled", true, DataSourceUpdateMode.OnPropertyChanged));
         }
 
@@ -190,6 +190,7 @@ namespace XMLViewer2
         private async Task SearchAsync(string text, bool searchNext = false)
         {
             _settings.CurrentOperation = "Поиск...";
+            _settings.EnabledSearch = false;
             ModelXML model = null;
             if (searchNext)
             {
@@ -199,14 +200,17 @@ namespace XMLViewer2
                 model = await _xmlViewer.SearchAsync(treeListView1, findTextBox.Text);
 
             ExpandAndSelectFoundNode(model);
+            _settings.EnabledSearch = true;
             _settings.CurrentOperation = "";
+
 
         }
         private async void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F3)
             {
-                await SearchAsync("", true);
+                if (_settings.EnabledSearch)
+                    await SearchAsync("", true);
             }
         }
 
