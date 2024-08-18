@@ -6,12 +6,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using XMLViewer2.Models;
 
 namespace XMLViewer2.Classes
 {
     public class Searcher
     {
         private ModelXML _lastFoundNode = null;
+       
         private string _currentSearchTerm = null;
         private CancellationTokenSource _cancellationTokenSource;
         private ModelXML FindNextNode(TreeListView treeListView, string searchTerm)
@@ -129,8 +131,8 @@ namespace XMLViewer2.Classes
             try
             {
                 var res = await Task.Run(() => FindNextNode(treeListView, _currentSearchTerm), cancelationToken);
-                if (res==null)
-                    MessageBox.Show("Больше совпадений не найдено.");
+                //if (res==null)
+                  //  MessageBox.Show("Больше совпадений не найдено.");
                 return res;
             }
             catch (OperationCanceledException)

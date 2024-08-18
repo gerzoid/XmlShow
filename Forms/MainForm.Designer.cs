@@ -119,7 +119,7 @@
             treeContextMenu.ImageScalingSize = new Size(20, 20);
             treeContextMenu.Items.AddRange(new ToolStripItem[] { копироватьЗначениеToolStripMenuItem, копироватьИмяТегаToolStripMenuItem, toolStripSeparator3, статистикаToolStripMenuItem });
             treeContextMenu.Name = "contextMenuStrip1";
-            treeContextMenu.Size = new Size(233, 110);
+            treeContextMenu.Size = new Size(233, 82);
             treeContextMenu.Opening += contextMenuStrip1_Opening;
             // 
             // копироватьЗначениеToolStripMenuItem
@@ -247,7 +247,7 @@
             // 
             buttonFindNext.FlatStyle = FlatStyle.Flat;
             buttonFindNext.Image = Properties.Resources.icons8_найти_24;
-            buttonFindNext.Location = new Point(514, 545);
+            buttonFindNext.Location = new Point(512, 495);
             buttonFindNext.Name = "buttonFindNext";
             buttonFindNext.Size = new Size(34, 27);
             buttonFindNext.TabIndex = 15;
@@ -262,6 +262,7 @@
             findTextBox.PlaceholderText = "Текст для поиска...";
             findTextBox.Size = new Size(547, 27);
             findTextBox.TabIndex = 8;
+            findTextBox.TextChanged += findTextBox_TextChanged;
             findTextBox.KeyDown += findTextBox_KeyDown;
             // 
             // tabControl1

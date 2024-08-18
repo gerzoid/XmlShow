@@ -72,6 +72,8 @@ namespace XMLViewer2
             toolStripMenuItem3.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
             tsButtonExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
             tsMenuExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            //buttonFindNext.DataBindings.Add(new Binding("Visible", _settings, "SearchNextEnabled", true, DataSourceUpdateMode.OnPropertyChanged));
+            buttonFindNext.DataBindings.Add(new Binding("Visible", _settings, "SearchNextEnabled", true, DataSourceUpdateMode.OnPropertyChanged));
         }
 
         public void ExportToExcel()
@@ -181,17 +183,30 @@ namespace XMLViewer2
         {
             if (e.KeyCode == Keys.Enter)
             {
-                var model = await _xmlViewer.SearchAsync(treeListView1, findTextBox.Text);
-                ExpandAndSelectFoundNode(model);
+                await SearchAsync(findTextBox.Text);
             }
         }
 
+        private async Task SearchAsync(string text, bool searchNext = false)
+        {
+            _settings.CurrentOperation = "Поиск...";
+            ModelXML model = null;
+            if (searchNext)
+            {
+                model = await _xmlViewer.SearchNextAsync(treeListView1);
+            }
+            else
+                model = await _xmlViewer.SearchAsync(treeListView1, findTextBox.Text);
+
+            ExpandAndSelectFoundNode(model);
+            _settings.CurrentOperation = "";
+
+        }
         private async void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F3)
             {
-                var model = await _xmlViewer.SearchNextAsync(treeListView1);
-                ExpandAndSelectFoundNode(model);
+                await SearchAsync("", true);
             }
         }
 
@@ -240,9 +255,9 @@ namespace XMLViewer2
             treeListView1.Focus();
         }
 
-        private void buttonFindNext_Click(object sender, EventArgs e)
+        private async void buttonFindNext_Click(object sender, EventArgs e)
         {
-
+            await SearchAsync("", true);
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -356,6 +371,11 @@ namespace XMLViewer2
         {
             if (treeListView1.SelectedObject is ModelXML model && model != null)
                 Clipboard.SetText(model.node.Name);
+        }
+
+        private void findTextBox_TextChanged(object sender, EventArgs e)
+        {
+            _settings.SearchNextEnabled = false;
         }
     }
 }

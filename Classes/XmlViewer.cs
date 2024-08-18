@@ -9,6 +9,7 @@ using System.Collections;
 using System.Data;
 using BrightIdeasSoftware;
 using XMLViewer2.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace XMLViewer2.Classes
 {
@@ -25,7 +26,7 @@ namespace XMLViewer2.Classes
 
         public bool FileOpened = false;
         public XmlViewer(Exporter exporter, Searcher searcher, Settings settings)
-        {            
+        {
             model = new ModelXML();
             _searcher = searcher;
             _exporter = exporter;
@@ -93,11 +94,15 @@ namespace XMLViewer2.Classes
 
         public async Task<ModelXML?> SearchAsync(TreeListView treeListView, string searchTerm)
         {
-            return await _searcher.PerformSearchAsync(treeListView, searchTerm);
+            var model = await _searcher.PerformSearchAsync(treeListView, searchTerm);
+            _settings.SearchNextEnabled = model != null;
+            return model;
         }
         public async Task<ModelXML?> SearchNextAsync(TreeListView treeListView)
         {
-            return await _searcher.SearchNextAsync(treeListView);
+            var model = await _searcher.SearchNextAsync(treeListView);
+            _settings.SearchNextEnabled = model != null;
+            return model;
         }
 
         public bool Export()
