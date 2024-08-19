@@ -25,29 +25,6 @@ namespace XMLViewer2.Models
             }
         }
         
-        private string _currentOperation = "-";
-        
-        [JsonIgnore]
-        public string CurrentOperation { get { return _currentOperation; } set { _currentOperation = value;  OnPropertyChanged(); Application.DoEvents(); } }
-
-        [JsonIgnore]
-        public string FilePath {  get; set; }
-        [JsonIgnore]
-        public string FileName { get; set; }
-
-        private bool _fileIsOpened = false;
-        [JsonIgnore]
-        public bool FileIsOpened {  get { return _fileIsOpened; } set { _fileIsOpened = value; OnPropertyChanged(); } }
-
-        private bool _enabledSearch = false;
-        [JsonIgnore]
-        public bool EnabledSearch { get { return _enabledSearch; } set { _enabledSearch = value; OnPropertyChanged(); } }
-
-        private bool _searchNextEnabled = false;
-        [JsonIgnore]
-        public bool SearchNextEnabled { get { return _searchNextEnabled; } set {
-                _searchNextEnabled = value; OnPropertyChanged(); } }
-
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string property="")

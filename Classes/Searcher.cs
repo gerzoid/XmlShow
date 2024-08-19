@@ -139,6 +139,7 @@ namespace XMLViewer2.Classes
             }
             finally
             {
+                if (_cancellationTokenSource != null) 
                 _cancellationTokenSource.Dispose();
                 _cancellationTokenSource = null;
             }

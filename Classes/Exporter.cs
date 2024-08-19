@@ -15,10 +15,12 @@ namespace XMLViewer2.Classes
     {
         Dictionary<string, int> columns;
         DataTable dataTable;
+        State _state;
         Settings _settings;
-        public Exporter(Settings settings)
+        public Exporter(Settings settings, State state)
         {
             _settings = settings;
+            _state = state;
         }   
         
         string GetNodename(XmlNode node)
@@ -63,23 +65,23 @@ namespace XMLViewer2.Classes
             dataTable = new DataTable();
             columns = new Dictionary<string, int>();
             dataTable.Rows.Add();
-            _settings.CurrentOperation = "Составляем список колонок";
+            _state.SetBusyState("Составляем список колонок");
 
             FillDataTable(model);
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            string file = _settings.FilePath + "\\" + Path.GetRandomFileName() + ".xlsx";
+            string file = _state.FilePath + "\\" + Path.GetRandomFileName() + ".xlsx";
             var excel = new ExcelPackage(file);
             ExcelWorksheet workSheet = excel.Workbook.Worksheets.Add("Export");
-            
-            _settings.CurrentOperation = "Вставка данных в Excel файл";            
+
+            _state.SetBusyState("Вставка данных в Excel файл");
 
             workSheet.Cells[1, 1].LoadFromDataTable(dataTable, true);
 
-            _settings.CurrentOperation = $"Сохраняем файл {file}";
+            _state.SetBusyState($"Сохраняем файл {file}");
             excel.Save();
-            _settings.CurrentOperation = "Готов";
+            _state.FreeState();
             excel.Dispose();
         }
 

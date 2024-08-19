@@ -23,29 +23,31 @@ namespace XMLViewer2.Classes
         Searcher _searcher;
         Exporter _exporter;
         Settings _settings;
+        State _state;
 
         public bool FileOpened = false;
-        public XmlViewer(Exporter exporter, Searcher searcher, Settings settings)
+        public XmlViewer(Exporter exporter, Searcher searcher, Settings settings, State state)
         {
             model = new ModelXML();
             _searcher = searcher;
             _exporter = exporter;
             _settings = settings;
+            _state = state;
         }
 
         public IEnumerable LoadXmlFile(string filePath)
         {
-            _settings.FileIsOpened = false;
+            _state.FileIsOpened = false;
 
             model = new ModelXML();
             xmlDoc = new XmlDocument();                       
             
-            _settings.FileName = Path.GetFileName(filePath);
-            _settings.FilePath = Path.GetDirectoryName(filePath);
+            _state.FileName = Path.GetFileName(filePath);
+            _state.FilePath = Path.GetDirectoryName(filePath);
 
             xmlDoc.Load(filePath);
             model.node = xmlDoc;
-            _settings.FileIsOpened = true;
+            _state.FileIsOpened = true;
             return model.GetChildrens();
         }
 
@@ -95,13 +97,13 @@ namespace XMLViewer2.Classes
         public async Task<ModelXML?> SearchAsync(TreeListView treeListView, string searchTerm)
         {
             var model = await _searcher.PerformSearchAsync(treeListView, searchTerm);
-            _settings.SearchNextEnabled = model != null;
+            _state.SearchNextEnabled = model != null;
             return model;
         }
         public async Task<ModelXML?> SearchNextAsync(TreeListView treeListView)
         {
             var model = await _searcher.SearchNextAsync(treeListView);
-            _settings.SearchNextEnabled = model != null;
+            _state.SearchNextEnabled = model != null;
 
             return model;
         }

@@ -29,6 +29,7 @@ namespace XMLViewer2
         {         
             var settings = SettingsSerializer.Deserialize();
             services.AddSingleton(settings);
+            services.AddSingleton<State>();
             services.AddTransient<Exporter>();
             services.AddTransient<Searcher>();
             services.AddSingleton<Lazy<XmlDoc>>();

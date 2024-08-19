@@ -17,15 +17,17 @@ namespace XMLViewer2
     {
         XmlViewer _xmlViewer;
         Settings _settings;
+        State _state;
         Lazy<XmlDoc> _xDocument;
 
         ExportToExcelSettingsForm _exportToExcelSettingsForm;
 
-        public MainForm(Settings settings, XmlViewer viewer, ExportToExcelSettingsForm exportToExcelSettingsForm, Lazy<XmlDoc> document)
+        public MainForm(Settings settings, XmlViewer viewer, ExportToExcelSettingsForm exportToExcelSettingsForm, Lazy<XmlDoc> document, State state)
         {
             _settings = settings;
             _xmlViewer = viewer;
             _exportToExcelSettingsForm = exportToExcelSettingsForm;
+            _state = state;
             _xDocument = document;
 
             InitializeComponent();
@@ -36,11 +38,7 @@ namespace XMLViewer2
             SetupDataBindings();
 
             ResizeForm();
-        }
-
-        public void CheckMenuEnabled()
-        {
-
+            _state = state;
         }
 
         public void SetupTreeView()
@@ -66,14 +64,14 @@ namespace XMLViewer2
 
         public void SetupDataBindings()
         {
-            tsStatusLabel.DataBindings.Add(new Binding("Text", _settings, "CurrentOperation", true, DataSourceUpdateMode.OnPropertyChanged));
-            количествоЭлементовToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
-            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
-            toolStripMenuItem3.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
-            tsButtonExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
-            tsMenuExportExcel.DataBindings.Add(new Binding("Enabled", _settings, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));            
-            buttonFindNext.DataBindings.Add(new Binding("Enabled", _settings, "EnabledSearch", true, DataSourceUpdateMode.OnPropertyChanged));
-            buttonFindNext.DataBindings.Add(new Binding("Visible", _settings, "SearchNextEnabled", true, DataSourceUpdateMode.OnPropertyChanged));
+            tsStatusLabel.DataBindings.Add(new Binding("Text", _state, "CurrentOperation", true, DataSourceUpdateMode.OnPropertyChanged));
+            количествоЭлементовToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _state, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            количествоЭлементовСТакимЖеЗначениемToolStripMenuItem.DataBindings.Add(new Binding("Enabled", _state, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            toolStripMenuItem3.DataBindings.Add(new Binding("Enabled", _state, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            tsButtonExportExcel.DataBindings.Add(new Binding("Enabled", _state, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            tsMenuExportExcel.DataBindings.Add(new Binding("Enabled", _state, "FileIsOpened", true, DataSourceUpdateMode.OnPropertyChanged));
+            buttonFindNext.DataBindings.Add(new Binding("Enabled", _state, "NotIsBusy", true, DataSourceUpdateMode.OnPropertyChanged));
+            buttonFindNext.DataBindings.Add(new Binding("Visible", _state, "SearchNextEnabled", true, DataSourceUpdateMode.OnPropertyChanged));
         }
 
         public void ExportToExcel()
@@ -173,7 +171,7 @@ namespace XMLViewer2
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 treeListView1.ClearObjects();
-                _xDocument = new Lazy<XmlDoc>(() => new XmlDoc(_settings.FilePath + "\\" + _settings.FileName));
+                _xDocument = new Lazy<XmlDoc>(() => new XmlDoc(_state.FilePath + "\\" + _state.FileName));
                 //await Task.Run(()=>_xDocument.Load(openFileDialog1.FileName));
                 treeListView1.Roots = _xmlViewer.LoadXmlFile(openFileDialog1.FileName);
             }
@@ -189,8 +187,7 @@ namespace XMLViewer2
 
         private async Task SearchAsync(string text, bool searchNext = false)
         {
-            _settings.CurrentOperation = "Поиск...";
-            _settings.EnabledSearch = false;
+            _state.SetBusyState("Поиск...");
             ModelXML model = null;
             if (searchNext)
             {
@@ -200,17 +197,15 @@ namespace XMLViewer2
                 model = await _xmlViewer.SearchAsync(treeListView1, findTextBox.Text);
 
             ExpandAndSelectFoundNode(model);
-            _settings.EnabledSearch = true;
-            _settings.CurrentOperation = "";
-
+            _state.FreeState();
 
         }
         private async void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F3)
             {
-                if (_settings.EnabledSearch)
-                    await SearchAsync("", true);
+                if (!_state.IsBusy)
+                    SearchAsync("", true);
             }
         }
 
@@ -379,7 +374,7 @@ namespace XMLViewer2
 
         private void findTextBox_TextChanged(object sender, EventArgs e)
         {
-            _settings.SearchNextEnabled = false;
+            _state.SearchNextEnabled = false;
         }
     }
 }
